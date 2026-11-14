@@ -1,0 +1,3359 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Licda. Violeta Michelle Cortez Surio | Portafolio Híbrido & Dirección Creativa</title>
+  
+  <!-- Google Fonts: Poppins, Cinzel, Nunito Sans, Playfair Display -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Nunito+Sans:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;1,600&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome & Devicon para Stacks Tecnológicos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+  <!-- PDF.js & SheetJS (XLSX) para Libros Interactivos -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+
+  <style>
+    :root {
+      --bg-deep: #070510;
+      --bg-nebula: #110a24;
+      --card-bg: rgba(22, 14, 46, 0.72);
+      --card-border: rgba(168, 85, 247, 0.35);
+      --neon-purple: #a855f7;
+      --neon-pink: #ec4899;
+      --neon-cyan: #38bdf8;
+      --text-main: #f8fafc;
+      --text-muted: #cbd5e1;
+      --glow-shadow: 0 0 22px rgba(168, 85, 247, 0.45), 0 0 45px rgba(236, 72, 153, 0.2);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-deep);
+      color: var(--text-main);
+      overflow-x: hidden;
+      min-height: 100vh;
+      background-image: 
+        radial-gradient(circle at 15% 20%, rgba(168, 85, 247, 0.16) 0%, transparent 45%),
+        radial-gradient(circle at 85% 75%, rgba(236, 72, 153, 0.14) 0%, transparent 45%),
+        radial-gradient(circle at 50% 50%, #0d081d 0%, #05030b 100%);
+    }
+
+    /* Fondo de estrellas sutiles animadas */
+    #stars-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* Barra de Navegación Flotante Sticky (Visible al entrar en secciones sin tapar títulos) */
+    .sticky-nav {
+      position: sticky;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 900;
+      background: rgba(9, 6, 20, 0.94);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(168, 85, 247, 0.35);
+      padding: 12px 24px;
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7);
+      animation: slideDown 0.4s ease forwards;
+    }
+
+    .sticky-nav.active {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 1rem;
+      background: linear-gradient(90deg, #fff, #d8b4fe);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      white-space: nowrap;
+    }
+
+    .nav-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+    }
+
+    .nav-pill-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      color: #e2e8f0;
+      padding: 7px 14px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-pill-btn:hover, .nav-pill-btn.active {
+      background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink));
+      border-color: transparent;
+      color: #fff;
+      box-shadow: 0 0 15px rgba(168, 85, 247, 0.6);
+      transform: translateY(-1px);
+    }
+
+    /* Contenedor Principal */
+    .container {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    /* HERO SECTION (Biografía Animada + Foto sin fondo) */
+    .hero-section {
+      min-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 20px;
+      transition: all 0.5s ease;
+    }
+
+    .hero-section.compact-mode {
+      display: none;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 0.85fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 999px;
+      background: rgba(168, 85, 247, 0.14);
+      border: 1px solid rgba(168, 85, 247, 0.45);
+      color: #e9d5ff;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-bottom: 18px;
+      box-shadow: 0 0 15px rgba(168, 85, 247, 0.25);
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.1s;
+    }
+
+    .hero-title {
+      font-size: clamp(2.2rem, 4.2vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 12px;
+      background: linear-gradient(95deg, #ffffff 10%, #e9d5ff 55%, #f472b6 95%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.25s;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #c084fc;
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.4s;
+    }
+
+    .hero-bio p {
+      color: var(--text-muted);
+      font-size: 0.98rem;
+      line-height: 1.75;
+      margin-bottom: 14px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.55s;
+    }
+
+    .hero-bio strong {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .hero-photo-wrap {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      opacity: 0;
+      animation: fadeScale 0.9s ease forwards 0.4s;
+    }
+
+    .hero-photo-glow {
+      position: absolute;
+      width: 340px;
+      height: 340px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.55) 0%, rgba(236, 72, 153, 0.25) 50%, transparent 72%);
+      filter: blur(28px);
+      z-index: 0;
+      animation: pulseGlow 4s infinite alternate;
+    }
+
+    .hero-photo {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 410px;
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.75));
+      border-bottom: 2px solid rgba(168, 85, 247, 0.5);
+      border-radius: 0 0 24px 24px;
+    }
+
+    /* Menú Principal de Selección (Botones Llamativos) */
+    .selector-prompt-box {
+      margin-top: 38px;
+      padding: 28px;
+      border-radius: 24px;
+      background: rgba(19, 12, 41, 0.82);
+      border: 1px solid rgba(168, 85, 247, 0.45);
+      box-shadow: var(--glow-shadow);
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.75s;
+    }
+
+    .selector-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .selector-header h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .selector-header span {
+      font-size: 0.82rem;
+      color: #f472b6;
+      font-weight: 600;
+      background: rgba(236, 72, 153, 0.14);
+      padding: 4px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(236, 72, 153, 0.4);
+      animation: bounceHorizontal 2s infinite;
+    }
+
+    .main-menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 14px;
+    }
+
+    .nebula-btn {
+      position: relative;
+      background: linear-gradient(145deg, rgba(35, 20, 74, 0.9), rgba(18, 11, 38, 0.95));
+      border: 1.5px solid rgba(168, 85, 247, 0.55);
+      border-radius: 16px;
+      padding: 16px 18px;
+      color: #fff;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      overflow: hidden;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+    }
+
+    .nebula-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent, rgba(168, 85, 247, 0.25), transparent);
+      transform: translateX(-100%);
+      transition: transform 0.6s ease;
+    }
+
+    .nebula-btn:hover::before {
+      transform: translateX(100%);
+    }
+
+    .nebula-btn:hover {
+      transform: translateY(-4px) scale(1.015);
+      border-color: #f472b6;
+      box-shadow: 0 0 25px rgba(168, 85, 247, 0.65), 0 0 12px rgba(236, 72, 153, 0.45);
+    }
+
+    .nebula-btn.featured-hybrid {
+      background: linear-gradient(135deg, #7e22ce, #db2777);
+      border-color: #f9a8d4;
+      box-shadow: 0 0 25px rgba(219, 39, 119, 0.5);
+    }
+
+    .nebula-btn-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      color: #e879f9;
+      flex-shrink: 0;
+    }
+
+    .nebula-btn.featured-hybrid .nebula-btn-icon {
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+    }
+
+    .nebula-btn-text strong {
+      display: block;
+      font-size: 0.92rem;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    .nebula-btn-text small {
+      display: block;
+      font-size: 0.74rem;
+      color: #cbd5e1;
+      margin-top: 3px;
+    }
+
+    /* Stacks Tecnológicos (Visibles en Inicio y Perfil Híbrido) */
+    .stacks-wrapper {
+      margin-top: 48px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 22px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.9s;
+    }
+
+    .stack-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 24px;
+      backdrop-filter: blur(12px);
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .stack-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--neon-pink);
+    }
+
+    .stack-card h3 {
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: #e9d5ff;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .stack-card p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin-bottom: 16px;
+    }
+
+    .tech-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tech-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 12px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(168, 85, 247, 0.28);
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: #f1f5f9;
+      transition: all 0.25s ease;
+    }
+
+    .tech-pill:hover {
+      background: rgba(168, 85, 247, 0.22);
+      border-color: #d8b4fe;
+      transform: translateY(-2px);
+    }
+
+    .tech-pill i {
+      font-size: 0.95rem;
+      color: #e879f9;
+    }
+
+    /* SECCIONES DE CONTENIDO DINÁMICO */
+    .portfolio-content-area {
+      padding-top: 24px;
+    }
+
+    .category-section {
+      display: none;
+      margin-bottom: 70px;
+      scroll-margin-top: 140px;
+    }
+
+    .category-section.active {
+      display: block;
+    }
+
+    /* Transición de entrada moderna y fluida estilo Jordi Segura */
+    @keyframes jordiReveal {
+      0% {
+        opacity: 0;
+        transform: translateY(28px) scale(0.985);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .category-section.active .section-banner {
+      animation: jordiReveal 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .category-section.active .brand-block {
+      animation: jordiReveal 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    .category-section.active .brand-block:nth-of-type(1) { animation-delay: 0.08s; }
+    .category-section.active .brand-block:nth-of-type(2) { animation-delay: 0.16s; }
+    .category-section.active .brand-block:nth-of-type(3) { animation-delay: 0.24s; }
+    .category-section.active .brand-block:nth-of-type(4) { animation-delay: 0.32s; }
+    .category-section.active .brand-block:nth-of-type(5) { animation-delay: 0.40s; }
+
+    .section-banner {
+      padding: 28px 32px;
+      border-radius: 22px;
+      background: linear-gradient(125deg, rgba(88, 28, 135, 0.45), rgba(19, 12, 41, 0.9));
+      border: 1px solid rgba(168, 85, 247, 0.5);
+      box-shadow: var(--glow-shadow);
+      margin-bottom: 34px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .section-banner h2 {
+      font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+      font-weight: 800;
+      background: linear-gradient(90deg, #fff, #e879f9);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .section-banner p {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      max-width: 780px;
+      margin-top: 6px;
+    }
+
+    /* Bloques de Marca / Proyecto */
+    .brand-block {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 30px;
+      margin-bottom: 36px;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.45);
+    }
+
+    .brand-header {
+      border-bottom: 1px solid rgba(168, 85, 247, 0.25);
+      padding-bottom: 18px;
+      margin-bottom: 24px;
+    }
+
+    .brand-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #f472b6;
+      background: rgba(236, 72, 153, 0.14);
+      border: 1px solid rgba(236, 72, 153, 0.35);
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 8px;
+    }
+
+    .brand-header h3 {
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .brand-header p {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    .bullet-list {
+      margin: 14px 0 18px 20px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.65;
+    }
+
+    .bullet-list li {
+      margin-bottom: 6px;
+    }
+
+    .bullet-list strong {
+      color: #e9d5ff;
+    }
+
+    /* Cuadrículas Uniformes de Imágenes (Sin estiramiento ni desajuste) */
+    .uniform-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .uniform-grid.wide-cards {
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    }
+
+    .media-card {
+      background: rgba(12, 8, 28, 0.85);
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.35s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .media-card:hover {
+      transform: translateY(-5px);
+      border-color: #f472b6;
+      box-shadow: 0 10px 28px rgba(168, 85, 247, 0.35);
+    }
+
+    .uniform-img-box {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background: radial-gradient(circle at center, rgba(88, 28, 135, 0.25), rgba(7, 5, 16, 0.95));
+      overflow: hidden;
+      cursor: zoom-in;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .uniform-img-box.square-box {
+      aspect-ratio: 1 / 1;
+    }
+
+    .uniform-img-box.vertical-box {
+      aspect-ratio: 3 / 4;
+      min-height: 380px;
+    }
+
+    .uniform-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.45s ease;
+    }
+
+    .uniform-img-box.contain-mode img {
+      object-fit: contain;
+      padding: 12px;
+    }
+
+    .media-card:hover .uniform-img-box img {
+      transform: scale(1.05);
+    }
+
+    .zoom-hint {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background: rgba(7, 5, 16, 0.78);
+      color: #fff;
+      border: 1px solid rgba(168, 85, 247, 0.5);
+      border-radius: 8px;
+      padding: 4px 9px;
+      font-size: 0.72rem;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .media-caption {
+      padding: 14px 16px;
+      font-size: 0.84rem;
+      color: #e2e8f0;
+      font-weight: 500;
+      line-height: 1.45;
+      border-top: 1px solid rgba(168, 85, 247, 0.18);
+    }
+
+    /* VISORES INTERACTIVOS DE LIBROS (PDF & EXCEL XLSX) */
+    .book-viewer-container {
+      background: #0b0719;
+      border: 1.5px solid rgba(168, 85, 247, 0.5);
+      border-radius: 18px;
+      overflow: hidden;
+      margin: 22px 0;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+    }
+
+    .book-viewer-container:fullscreen {
+      background: #070510;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 16px;
+    }
+
+    .book-toolbar {
+      background: linear-gradient(90deg, #1e1142, #130b2b);
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      border-bottom: 1px solid rgba(168, 85, 247, 0.35);
+    }
+
+    .book-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #f3e8ff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .book-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .book-btn {
+      background: rgba(168, 85, 247, 0.2);
+      border: 1px solid rgba(168, 85, 247, 0.5);
+      color: #fff;
+      padding: 6px 13px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .book-btn:hover {
+      background: var(--neon-purple);
+      box-shadow: 0 0 12px rgba(168, 85, 247, 0.6);
+    }
+
+    .book-btn.fullscreen-btn {
+      background: linear-gradient(135deg, #9333ea, #db2777);
+      border-color: transparent;
+    }
+
+    .page-indicator {
+      font-size: 0.82rem;
+      color: #e9d5ff;
+      font-weight: 600;
+      padding: 0 8px;
+    }
+
+    /* Stage del Libro PDF con efecto de volteo y flechas Instagram */
+    .pdf-book-stage {
+      position: relative;
+      min-height: 500px;
+      max-height: 720px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 24px 20px;
+      background: radial-gradient(circle, #170e33 0%, #090614 100%);
+      overflow: auto;
+      perspective: 1400px;
+    }
+
+    .pdf-book-stage.vertical-doc {
+      min-height: 640px;
+      max-height: 85vh;
+    }
+
+    .book-viewer-container:fullscreen .pdf-book-stage {
+      max-height: calc(100vh - 85px);
+      height: 100%;
+      align-items: flex-start;
+    }
+
+    .pdf-canvas-wrapper {
+      margin: auto;
+      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease;
+      transform-origin: center center;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.85), 0 0 25px rgba(168, 85, 247, 0.35);
+      border-radius: 6px;
+      overflow: hidden;
+      background: #fff;
+      display: block;
+    }
+
+    .pdf-canvas-wrapper.flipping-next {
+      transform: rotateY(-18deg) scale(0.97);
+      opacity: 0.55;
+    }
+
+    .pdf-canvas-wrapper.flipping-prev {
+      transform: rotateY(18deg) scale(0.97);
+      opacity: 0.55;
+    }
+
+    .pdf-canvas-wrapper canvas {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* Flechas flotantes estilo Instagram para navegar libros */
+    .pdf-stage-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.92), rgba(236, 72, 153, 0.92));
+      border: 2px solid rgba(255, 255, 255, 0.85);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      cursor: pointer;
+      z-index: 25;
+      box-shadow: 0 0 18px rgba(236, 72, 153, 0.7), 0 4px 14px rgba(0, 0, 0, 0.6);
+      transition: all 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+      backdrop-filter: blur(4px);
+    }
+
+    .pdf-stage-arrow:hover {
+      transform: translateY(-50%) scale(1.15);
+      background: linear-gradient(135deg, #a855f7, #ec4899);
+      border-color: #ffffff;
+      box-shadow: 0 0 26px rgba(236, 72, 153, 0.95), 0 0 14px rgba(168, 85, 247, 0.85);
+    }
+
+    .pdf-stage-arrow.pdf-arrow-prev {
+      left: 18px;
+    }
+
+    .pdf-stage-arrow.pdf-arrow-next {
+      right: 18px;
+    }
+
+    /* Stage del Libro Excel (.xlsx) */
+    .xlsx-tabs-bar {
+      display: flex;
+      gap: 6px;
+      padding: 10px 16px;
+      background: #120b26;
+      border-bottom: 1px solid rgba(168, 85, 247, 0.25);
+      overflow-x: auto;
+    }
+
+    .xlsx-tab {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      color: #cbd5e1;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .xlsx-tab.active, .xlsx-tab:hover {
+      background: var(--neon-purple);
+      color: #fff;
+      border-color: #e879f9;
+    }
+
+    .xlsx-sheet-stage {
+      max-height: 460px;
+      overflow: auto;
+      padding: 16px;
+      background: #0d081d;
+    }
+
+    .book-viewer-container:fullscreen .xlsx-sheet-stage {
+      max-height: calc(100vh - 135px);
+      height: 100%;
+    }
+
+    .xlsx-sheet-stage table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.78rem;
+      color: #e2e8f0;
+      background: rgba(20, 13, 42, 0.9);
+    }
+
+    .xlsx-sheet-stage td, .xlsx-sheet-stage th {
+      border: 1px solid rgba(168, 85, 247, 0.25);
+      padding: 8px 10px;
+      text-align: left;
+      min-width: 110px;
+    }
+
+    .xlsx-sheet-stage tr:first-child td, .xlsx-sheet-stage th {
+      background: rgba(147, 51, 234, 0.35);
+      font-weight: 700;
+      color: #fff;
+    }
+
+    /* Líneas Gráficas de Marca para los Libros de Excel */
+    /* 1. TSS (The Social Spot Gastro Lounge) */
+    #xlsx-tss .xlsx-sheet-stage {
+      background: #071512;
+      font-family: 'Nunito Sans', sans-serif;
+    }
+    #xlsx-tss .xlsx-sheet-stage table {
+      font-family: 'Nunito Sans', sans-serif;
+      border-color: rgba(37, 97, 87, 0.45);
+    }
+    #xlsx-tss .xlsx-sheet-stage td, #xlsx-tss .xlsx-sheet-stage th {
+      border: 1px solid rgba(37, 97, 87, 0.32);
+      font-family: 'Nunito Sans', sans-serif;
+    }
+    #xlsx-tss .xlsx-sheet-stage tr:first-child td, #xlsx-tss .xlsx-sheet-stage th {
+      background: #256157;
+      color: #ffffff;
+      font-family: 'Cinzel', serif;
+      letter-spacing: 0.5px;
+    }
+    #xlsx-tss .xlsx-tab.active, #xlsx-tss .xlsx-tab:hover {
+      background: #256157;
+      border-color: #38a896;
+      color: #ffffff;
+    }
+
+    /* 2. Mom Made Bakery */
+    #xlsx-mom .xlsx-sheet-stage {
+      background: #14091a;
+      font-family: 'Playfair Display', 'Poppins', serif, sans-serif;
+    }
+    #xlsx-mom .xlsx-sheet-stage table {
+      font-family: 'Playfair Display', 'Poppins', serif, sans-serif;
+      border-color: rgba(219, 39, 119, 0.35);
+    }
+    #xlsx-mom .xlsx-sheet-stage td, #xlsx-mom .xlsx-sheet-stage th {
+      border: 1px solid rgba(219, 39, 119, 0.28);
+    }
+    #xlsx-mom .xlsx-sheet-stage tr:first-child td, #xlsx-mom .xlsx-sheet-stage th {
+      background: linear-gradient(90deg, #256157, #db2777);
+      color: #ffffff;
+      font-weight: 700;
+    }
+    #xlsx-mom .xlsx-tab.active, #xlsx-mom .xlsx-tab:hover {
+      background: linear-gradient(135deg, #256157, #db2777);
+      border-color: #f472b6;
+      color: #ffffff;
+    }
+
+    /* 3. Chero Films */
+    #xlsx-chero .xlsx-sheet-stage {
+      background: #0d0b07;
+      font-family: 'Poppins', sans-serif;
+    }
+    #xlsx-chero .xlsx-sheet-stage table {
+      font-family: 'Poppins', sans-serif;
+      border-color: rgba(245, 158, 11, 0.35);
+    }
+    #xlsx-chero .xlsx-sheet-stage td, #xlsx-chero .xlsx-sheet-stage th {
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+    #xlsx-chero .xlsx-sheet-stage tr:first-child td, #xlsx-chero .xlsx-sheet-stage th {
+      background: #f59e0b;
+      color: #0b0904;
+      font-weight: 800;
+    }
+    #xlsx-chero .xlsx-tab.active, #xlsx-chero .xlsx-tab:hover {
+      background: #f59e0b;
+      border-color: #fbbf24;
+      color: #000000;
+      font-weight: 700;
+    }
+
+    /* Títulos Llamativos Estilo Revista Nebulosa / Jordi Segura */
+    .magazine-section-header {
+      margin: 38px 0 22px;
+      padding: 22px 26px;
+      background: linear-gradient(135deg, rgba(88, 28, 135, 0.28), rgba(19, 12, 41, 0.75));
+      border-left: 4px solid var(--neon-pink);
+      border-radius: 0 18px 18px 0;
+      border-top: 1px solid rgba(168, 85, 247, 0.28);
+      border-right: 1px solid rgba(168, 85, 247, 0.28);
+      border-bottom: 1px solid rgba(168, 85, 247, 0.28);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    }
+
+    .magazine-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: #fbbf24;
+      margin-bottom: 6px;
+    }
+
+    .magazine-title {
+      font-size: clamp(1.35rem, 2.4vw, 1.85rem);
+      font-weight: 800;
+      background: linear-gradient(90deg, #ffffff, #f472b6, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .magazine-desc {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    /* Filas Editoriales: Imagen con Texto al Lado (Estilo Revista para Detener el Ojo) */
+    .editorial-feature-row {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 32px;
+      align-items: center;
+      background: rgba(18, 11, 38, 0.78);
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      border-radius: 22px;
+      padding: 28px;
+      margin: 24px 0;
+      box-shadow: 0 10px 32px rgba(0, 0, 0, 0.45);
+      transition: all 0.35s ease;
+    }
+
+    .editorial-feature-row:hover {
+      border-color: var(--neon-pink);
+      box-shadow: 0 12px 36px rgba(168, 85, 247, 0.3);
+      transform: translateY(-3px);
+    }
+
+    .editorial-feature-row.reverse-layout {
+      grid-template-columns: 0.95fr 1.05fr;
+    }
+
+    .editorial-feature-row.reverse-layout .editorial-text-col {
+      order: 2;
+    }
+
+    .editorial-feature-row.reverse-layout .editorial-img-col {
+      order: 1;
+    }
+
+    .editorial-text-col {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .editorial-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 4px 12px;
+      border-radius: 999px;
+      width: fit-content;
+    }
+
+    .editorial-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.35;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .editorial-body {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .editorial-copy-quote {
+      background: rgba(255, 255, 255, 0.04);
+      border-left: 3px solid #ec4899;
+      padding: 14px 18px;
+      border-radius: 0 12px 12px 0;
+      font-size: 0.88rem;
+      color: #f1f5f9;
+      line-height: 1.65;
+      white-space: pre-line;
+      margin-top: 6px;
+      font-style: italic;
+    }
+
+    .editorial-img-col {
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      background: radial-gradient(circle, rgba(88, 28, 135, 0.35), rgba(7, 5, 16, 0.95));
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      cursor: zoom-in;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 280px;
+    }
+
+    .editorial-img-col img {
+      width: 100%;
+      height: 100%;
+      max-height: 420px;
+      object-fit: contain;
+      transition: transform 0.45s ease;
+      padding: 10px;
+    }
+
+    .editorial-img-col:hover img {
+      transform: scale(1.04);
+    }
+
+    .editorial-panoramic-card {
+      background: rgba(18, 11, 38, 0.78);
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      border-radius: 20px;
+      padding: 22px;
+      margin: 20px 0;
+    }
+
+    .panoramic-img-box {
+      width: 100%;
+      background: radial-gradient(circle, rgba(88, 28, 135, 0.25), rgba(7, 5, 16, 0.95));
+      border-radius: 14px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-in;
+      position: relative;
+      padding: 10px;
+    }
+
+    .panoramic-img-box img {
+      width: 100%;
+      height: auto;
+      max-height: 280px;
+      object-fit: contain;
+    }
+
+    /* UI/UX Showcase con Tarjetas Más Grandes y Fondos Transparentes Integrados */
+    .uiux-showcase-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 26px;
+      margin-top: 24px;
+    }
+
+    .uiux-floating-card {
+      background: linear-gradient(145deg, rgba(26, 16, 56, 0.55), rgba(13, 8, 30, 0.7));
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      border-radius: 22px;
+      padding: 20px;
+      transition: all 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+      display: flex;
+      flex-direction: column;
+      backdrop-filter: blur(12px);
+    }
+
+    .uiux-floating-card:hover {
+      transform: translateY(-6px);
+      border-color: #f472b6;
+      box-shadow: 0 16px 38px rgba(168, 85, 247, 0.35), 0 0 20px rgba(236, 72, 153, 0.25);
+    }
+
+    .uiux-transparent-img-box {
+      position: relative;
+      width: 100%;
+      min-height: 270px;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-in;
+      overflow: hidden;
+    }
+
+    .uiux-transparent-img-box img {
+      width: 100%;
+      height: 100%;
+      max-height: 320px;
+      object-fit: contain;
+      filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.6));
+      transition: transform 0.4s ease;
+    }
+
+    .uiux-floating-card:hover .uiux-transparent-img-box img {
+      transform: scale(1.05);
+    }
+
+    /* Embeds de Video (YouTube, Shorts, TikTok, Instagram) */
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 24px;
+      margin-top: 20px;
+    }
+
+    .video-card {
+      background: rgba(13, 9, 30, 0.9);
+      border: 1px solid rgba(168, 85, 247, 0.38);
+      border-radius: 18px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .video-embed-box {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+    }
+
+    .video-embed-box.vertical-video {
+      aspect-ratio: 9 / 14;
+      max-height: 520px;
+    }
+
+    .video-embed-box iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .video-info {
+      padding: 18px;
+    }
+
+    .video-stats-badge {
+      display: inline-block;
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      padding: 3px 10px;
+      border-radius: 999px;
+      margin-bottom: 8px;
+    }
+
+    .video-info h4 {
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .video-info p {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Embeds de Instagram */
+    .social-embeds-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .ig-embed-frame {
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 2px solid var(--neon-purple);
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+      min-height: 460px;
+    }
+
+    .ig-embed-frame iframe {
+      width: 100%;
+      height: 480px;
+      border: none;
+    }
+
+    /* Lightbox Modal para Ver Imágenes en Grande (Fondo Nebulosa para Integrar PNGs Transparentes) */
+    .lightbox-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: radial-gradient(circle at center, rgba(30, 16, 60, 0.96) 0%, rgba(8, 5, 18, 0.98) 100%);
+      backdrop-filter: blur(16px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 24px;
+    }
+
+    .lightbox-modal.open {
+      display: flex;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .lightbox-modal img {
+      max-width: 92vw;
+      max-height: 82vh;
+      border-radius: 14px;
+      border: 2px solid var(--neon-purple);
+      box-shadow: 0 0 45px rgba(168, 85, 247, 0.55);
+      object-fit: contain;
+    }
+
+    .lightbox-caption {
+      margin-top: 14px;
+      color: #f3e8ff;
+      font-size: 0.95rem;
+      font-weight: 500;
+      text-align: center;
+      max-width: 800px;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 28px;
+      background: rgba(236, 72, 153, 0.25);
+      border: 1px solid #f472b6;
+      color: #fff;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 36px 20px;
+      border-top: 1px solid rgba(168, 85, 247, 0.25);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    /* Animaciones */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeScale {
+      from { opacity: 0; transform: scale(0.92); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    @keyframes slideDown {
+      from { transform: translateY(-100%); }
+      to { transform: translateY(0); }
+    }
+    @keyframes sectionReveal {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulseGlow {
+      from { transform: scale(0.95); opacity: 0.65; }
+      to { transform: scale(1.08); opacity: 0.95; }
+    }
+    @keyframes bounceHorizontal {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(4px); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @media (max-width: 920px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .hero-photo-wrap {
+        order: -1;
+      }
+      .hero-photo {
+        max-width: 280px;
+      }
+      .selector-header {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Canvas de Partículas Estelares -->
+  <canvas id="stars-canvas"></canvas>
+
+  <!-- Barra de Navegación Flotante (Aparece al elegir una sección) -->
+  <nav id="stickyNav" class="sticky-nav">
+    <div class="nav-brand" onclick="goHome()">
+      <i class="fa-solid fa-sparkles"></i> Licda. Violeta Michelle Cortez Surio
+    </div>
+    <div class="nav-pills">
+      <button class="nav-pill-btn" onclick="goHome()"><i class="fa-solid fa-house"></i> Inicio / Bio</button>
+      <button class="nav-pill-btn" data-target="estrategia" onclick="selectCategory('estrategia')"><i class="fa-solid fa-chess-queen"></i> Estrategia & Marketing</button>
+      <button class="nav-pill-btn" data-target="uiux" onclick="selectCategory('uiux')"><i class="fa-solid fa-laptop-code"></i> UI/UX & Web</button>
+      <button class="nav-pill-btn" data-target="diseno" onclick="selectCategory('diseno')"><i class="fa-solid fa-pen-nib"></i> Diseño Gráfico</button>
+      <button class="nav-pill-btn" data-target="audiovisual" onclick="selectCategory('audiovisual')"><i class="fa-solid fa-film"></i> Audiovisual</button>
+      <button class="nav-pill-btn" data-target="modelado3d" onclick="selectCategory('modelado3d')"><i class="fa-solid fa-cube"></i> Modelado 3D</button>
+      <button class="nav-pill-btn" data-target="docencia" onclick="selectCategory('docencia')"><i class="fa-solid fa-chalkboard-user"></i> Cátedra & Docencia</button>
+      <button class="nav-pill-btn" data-target="premios" onclick="selectCategory('premios')"><i class="fa-solid fa-trophy"></i> Premios & Prensa</button>
+      <button class="nav-pill-btn" data-target="certificados" onclick="selectCategory('certificados')"><i class="fa-solid fa-certificate"></i> Certificados</button>
+      <button class="nav-pill-btn" data-target="hibrido" onclick="selectCategory('hibrido')"><i class="fa-solid fa-meteor"></i> Perfil Híbrido Completo</button>
+    </div>
+  </nav>
+
+  <div class="container">
+    <!-- ==================== SECCIÓN 0: HERO & BIOGRAFÍA ANIMADA ==================== -->
+    <header id="heroSection" class="hero-section">
+      <div class="hero-grid">
+        <div class="hero-bio">
+          <div class="hero-badge">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> PORTAFOLIO INTERACTIVO HÍBRIDO • CREATIVE ART VIOLETA
+          </div>
+          <h1 class="hero-title">Licda. Violeta Michelle Cortez Surio</h1>
+          <div class="hero-subtitle">Estratega de Marketing & Marca • Diseñadora UI/UX & Web • Artista 3D, Plástica & Docente</div>
+          
+          <p>
+            Soy <strong>Violeta Michelle Cortez Surio</strong> (<em>Creative Art Violeta</em>), Licenciada en Diseño Gráfico, Estratega de Contenidos y Creadora Visual. A lo largo de mi trayectoria he liderado la coordinación de marcas, la gestión de comunidades digitales y el desarrollo de estrategias omnicanal que integran planificación con analítica y diseño de alto impacto.
+          </p>
+          <p>
+            Mi perfil evoluciona de manera fluida hacia el <strong>diseño UI/UX y el desarrollo web</strong>, así como al <strong>modelado 3D y la creación de entornos inmersivos</strong>. Como complemento a esta visión multidisciplinaria, mi background como <strong>artista plástica</strong> y mi experiencia como <strong>docente universitaria y mentora</strong> me otorgan una sólida capacidad para liderar equipos, estructurar procesos complejos y transformar ideas en experiencias visuales memorables.
+          </p>
+        </div>
+
+        <div class="hero-photo-wrap">
+          <div class="hero-photo-glow"></div>
+          <img 
+            src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/c4c67dc4c18862960960f1c0ab24783189781860/yo%20sin%20el%20fondo.png" 
+            alt="Violeta Michelle Cortez Surio" 
+            class="hero-photo"
+          />
+        </div>
+      </div>
+
+      <!-- MENÚ DE SELECCIÓN INTERACTIVA (LLAMATIVO) -->
+      <div class="selector-prompt-box">
+        <div class="selector-header">
+          <h2><i class="fa-solid fa-compass" style="color:#e879f9;"></i> Explora mi trayectoria por especialidad</h2>
+          <span><i class="fa-solid fa-hand-pointer"></i> Haz clic en una opción para comenzar</span>
+        </div>
+
+        <div class="main-menu-grid">
+          <button class="nebula-btn" onclick="selectCategory('estrategia')">
+            <div class="nebula-btn-icon"><i class="fa-solid fa-chess-queen"></i></div>
+            <div class="nebula-btn-text">
+              <strong>Estrategia & Marketing</strong>
+              <small>Auditorías, Master Workbooks, Ads & E-commerce</small>
+            </div>
+          </button>
+
+          <button class="nebula-btn" onclick="selectCategory('uiux')">
+            <div class="nebula-btn-icon"><i class="fa-solid fa-laptop-code"></i></div>
+            <div class="nebula-btn-text">
+              <strong>Diseño UI/UX & Web</strong>
+              <small>Ecosistema GN, Apps Script & Automatización</small>
+            </div>
+          </button>
+
+          <button class="nebula-btn" onclick="selectCategory('diseno')">
+            <div class="nebula-btn-icon"><i class="fa-solid fa-pen-nib"></i></div>
+            <div class="nebula-btn-text">
+              <strong>Diseño Gráfico & Branding</strong>
+              <small>Identidad visual, campañas 360° e ilustración</small>
+            </div>
+          </button>
+
+          <button class="nebula-btn" onclick="selectCategory('audiovisual')">
+            <div class="nebula-btn-icon"><i class="fa-solid fa-film"></i></div>
+            <div class="nebula-btn-text">
+              <strong>Producción Audiovisual</strong>
+              <small>Documentales, Shorts virales y Reels de marca</small>
+            </div>
+          </button>
+
+          <button class="nebula-btn" onclick="selectCategory('modelado3d')">
+            <div class="nebula-btn-icon"><i class="fa-solid fa-cube"></i></div>
+            <div class="nebula-btn-text">
+              <strong>Modelado 3D & Entornos</strong>
+              <small>Blender, Maya 3D y Galería Virtual Nebulosa</small>
+            </div>
+          </button>
+
+          <button class="nebula-btn" onclick="selectCategory('docencia')">
+            <div class="nebula-btn-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
+            <div class="nebula-btn-text">
+              <strong>Cátedra & Mentoría</strong>
+              <small>Docencia universitaria UTEC, charlas STEAM y talleres</small>
+            </div>
+          </button>
+
+          <button class="nebula-btn" onclick="selectCategory('premios')">
+            <div class="nebula-btn-icon"><i class="fa-solid fa-trophy"></i></div>
+            <div class="nebula-btn-text">
+              <strong>Premios, Arte & Prensa</strong>
+              <small>Galardones internacionales, MARTE y medios</small>
+            </div>
+          </button>
+
+          <button class="nebula-btn" onclick="selectCategory('certificados')">
+            <div class="nebula-btn-icon"><i class="fa-solid fa-certificate"></i></div>
+            <div class="nebula-btn-text">
+              <strong>Certificados & Títulos</strong>
+              <small>Licenciatura, diplomados, Platzi, Coursera y HubSpot</small>
+            </div>
+          </button>
+
+          <button class="nebula-btn featured-hybrid" onclick="selectCategory('hibrido')">
+            <div class="nebula-btn-icon"><i class="fa-solid fa-meteor"></i></div>
+            <div class="nebula-btn-text">
+              <strong>Conocer Todo el Perfil Híbrido</strong>
+              <small>Visualizar trayectoria completa sin filtros</small>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- STACKS TECNOLÓGICOS EN PORTADA -->
+      <div class="stacks-wrapper">
+        <div class="stack-card">
+          <h3><i class="fa-solid fa-chart-line" style="color:#38bdf8;"></i> Stack Estratégico, Analítica & Gestión</h3>
+          <p>Especialista en estructurar calendarios de contenido, análisis de métricas, pauta digital y planes estratégicos de alto rendimiento.</p>
+          <div class="tech-badges">
+            <span class="tech-pill"><i class="fa-solid fa-chart-simple"></i> Google Analytics</span>
+            <span class="tech-pill"><i class="fa-solid fa-chart-pie"></i> Power BI</span>
+            <span class="tech-pill"><i class="fa-solid fa-file-excel"></i> Excel Avanzado</span>
+            <span class="tech-pill"><i class="fa-brands fa-meta"></i> Meta Ads Manager</span>
+            <span class="tech-pill"><i class="fa-brands fa-google"></i> Google Ads</span>
+            <span class="tech-pill"><i class="fa-solid fa-cube"></i> Notion</span>
+            <span class="tech-pill"><i class="fa-brands fa-trello"></i> Trello</span>
+            <span class="tech-pill"><i class="fa-solid fa-list-check"></i> Asana</span>
+            <span class="tech-pill"><i class="fa-solid fa-chess-knight"></i> Estrategias & KPIs</span>
+          </div>
+        </div>
+
+        <div class="stack-card">
+          <h3><i class="fa-solid fa-wand-magic-sparkles" style="color:#e879f9;"></i> Dirección de Arte & Producción Creativa</h3>
+          <p>Dominio integral de software para diseño gráfico, edición de video, postproducción, audio y modelado 3D para activos de alto impacto.</p>
+          <div class="tech-badges">
+            <span class="tech-pill"><i class="devicon-illustrator-plain"></i> Illustrator</span>
+            <span class="tech-pill"><i class="devicon-photoshop-plain"></i> Photoshop</span>
+            <span class="tech-pill"><i class="fa-solid fa-book-open"></i> InDesign</span>
+            <span class="tech-pill"><i class="fa-solid fa-bezier-curve"></i> Affinity</span>
+            <span class="tech-pill"><i class="devicon-premierepro-plain"></i> Premiere Pro</span>
+            <span class="tech-pill"><i class="devicon-aftereffects-plain"></i> After Effects</span>
+            <span class="tech-pill"><i class="fa-solid fa-scissors"></i> CapCut</span>
+            <span class="tech-pill"><i class="fa-solid fa-clapperboard"></i> Filmora</span>
+            <span class="tech-pill"><i class="fa-solid fa-waveform-lines"></i> Audition</span>
+            <span class="tech-pill"><i class="fa-solid fa-microphone-lines"></i> Audacity</span>
+            <span class="tech-pill"><i class="devicon-blender-original"></i> Blender</span>
+            <span class="tech-pill"><i class="devicon-maya-plain"></i> Autodesk Maya</span>
+          </div>
+        </div>
+
+        <div class="stack-card">
+          <h3><i class="fa-solid fa-graduation-cap" style="color:#f472b6;"></i> Liderazgo, Cátedra & Mentoría Creativa</h3>
+          <p>Formación universitaria, diseño curricular de talleres STEAM, dirección de equipos multidisciplinarios y mentoría de talento creativo.</p>
+          <div class="tech-badges">
+            <span class="tech-pill"><i class="fa-solid fa-university"></i> Cátedra Universitaria</span>
+            <span class="tech-pill"><i class="fa-solid fa-atom"></i> Conferencias STEAM</span>
+            <span class="tech-pill"><i class="fa-solid fa-people-group"></i> Liderazgo de Equipos</span>
+            <span class="tech-pill"><i class="fa-solid fa-compass-drafting"></i> Mentoría de Portafolios</span>
+            <span class="tech-pill"><i class="fa-solid fa-diagram-project"></i> Estandarización QA</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ==================== ÁREA DE SECCIONES INTERACTIVAS ==================== -->
+    <main id="portfolioContent" class="portfolio-content-area">
+
+      <!-- 1. ESTRATEGIA, AUDITORÍA & MARKETING -->
+      <section id="sec-estrategia" class="category-section" data-cat="estrategia">
+        <div class="section-banner">
+          <div>
+            <h2>🚀 Estrategia, Auditoría de Marca & Performance Marketing</h2>
+            <p>Frameworks metodológicos, investigación de mercado, Master Workbooks en Excel/Sheets, copywriting persuasivo, embudos de captación y campañas de alto ROI.</p>
+          </div>
+        </div>
+
+        <!-- THE SOCIAL SPOT (TSS) -->
+        <div class="brand-block">
+          <div class="brand-header">
+            <span class="brand-tag">Framework Metodológico • Research & Auditoría</span>
+            <h3>The Social Spot Gastro Lounge (TSS) — Auditoría Estratégica & Copywriting</h3>
+            <p>Levantamiento de fuentes, benchmark competitivo, diagnóstico con evidencia y arquitectura estratégica completa desarrollada en Master Workbook y Reporte Ejecutivo.</p>
+          </div>
+
+          <!-- Libro Excel TSS -->
+          <div class="book-viewer-container" id="xlsx-tss">
+            <div class="book-toolbar">
+              <div class="book-title"><i class="fa-solid fa-file-excel" style="color:#22c55e;"></i> Libro Excel: TSS Research & Audit Master Workbook v1.1</div>
+              <div class="book-controls">
+                <button class="book-btn fullscreen-btn" onclick="toggleBookFullscreen('xlsx-tss')"><i class="fa-solid fa-expand"></i> Pantalla Completa</button>
+              </div>
+            </div>
+            <div class="xlsx-tabs-bar" id="xlsx-tss-tabs"></div>
+            <div class="xlsx-sheet-stage" id="xlsx-tss-stage">Cargando hojas de cálculo interactivas...</div>
+          </div>
+
+          <!-- Libro PDF Reporte Ejecutivo TSS -->
+          <div class="book-viewer-container" id="pdf-tss-exec">
+            <div class="book-toolbar">
+              <div class="book-title"><i class="fa-solid fa-book-open" style="color:#e879f9;"></i> Reporte Ejecutivo: Auditoría Estratégica Digital (TSS)</div>
+              <div class="book-controls">
+                <button class="book-btn" onclick="changePdfPage('pdf-tss-exec', -1)"><i class="fa-solid fa-chevron-left"></i> Anterior</button>
+                <span class="page-indicator" id="pdf-tss-exec-info">Página 1 / --</span>
+                <button class="book-btn" onclick="changePdfPage('pdf-tss-exec', 1)">Siguiente <i class="fa-solid fa-chevron-right"></i></button>
+                <button class="book-btn fullscreen-btn" onclick="toggleBookFullscreen('pdf-tss-exec')"><i class="fa-solid fa-expand"></i> Pantalla Completa</button>
+              </div>
+            </div>
+            <div class="pdf-book-stage vertical-doc">
+              <button class="pdf-stage-arrow pdf-arrow-prev" onclick="changePdfPage('pdf-tss-exec', -1)" aria-label="Página anterior"><i class="fa-solid fa-chevron-left"></i></button>
+              <div class="pdf-canvas-wrapper" id="pdf-tss-exec-wrap">
+                <canvas id="pdf-tss-exec-canvas"></canvas>
+              </div>
+              <button class="pdf-stage-arrow pdf-arrow-next" onclick="changePdfPage('pdf-tss-exec', 1)" aria-label="Página siguiente"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+          </div>
+
+          <!-- Libro PDF Copys TSS -->
+          <div class="book-viewer-container" id="pdf-tss-copys">
+            <div class="book-toolbar">
+              <div class="book-title"><i class="fa-solid fa-book-open" style="color:#38bdf8;"></i> Libro Horizontal: Copywriting & Estrategia de Pauta (TSS)</div>
+              <div class="book-controls">
+                <button class="book-btn" onclick="changePdfPage('pdf-tss-copys', -1)"><i class="fa-solid fa-chevron-left"></i> Anterior</button>
+                <span class="page-indicator" id="pdf-tss-copys-info">Página 1 / --</span>
+                <button class="book-btn" onclick="changePdfPage('pdf-tss-copys', 1)">Siguiente <i class="fa-solid fa-chevron-right"></i></button>
+                <button class="book-btn fullscreen-btn" onclick="toggleBookFullscreen('pdf-tss-copys')"><i class="fa-solid fa-expand"></i> Pantalla Completa</button>
+              </div>
+            </div>
+            <div class="pdf-book-stage">
+              <button class="pdf-stage-arrow pdf-arrow-prev" onclick="changePdfPage('pdf-tss-copys', -1)" aria-label="Página anterior"><i class="fa-solid fa-chevron-left"></i></button>
+              <div class="pdf-canvas-wrapper" id="pdf-tss-copys-wrap">
+                <canvas id="pdf-tss-copys-canvas"></canvas>
+              </div>
+              <button class="pdf-stage-arrow pdf-arrow-next" onclick="changePdfPage('pdf-tss-copys', 1)" aria-label="Página siguiente"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- CHERO FILMS -->
+        <div class="brand-block">
+          <div class="brand-header">
+            <span class="brand-tag">Marketing Operations & Strategy Lead</span>
+            <h3>Chero Films — Framework de Estandarización Operativa & QA</h3>
+            <p>Protocolo técnico para la optimización de flujos de trabajo, control de calidad audiovisual, sistema automatizado de Intake & Triage (Tiers A, B y C) y alineación operativa en agencias creativas.</p>
+          </div>
+
+          <!-- Libro Excel Chero Films -->
+          <div class="book-viewer-container" id="xlsx-chero">
+            <div class="book-toolbar">
+              <div class="book-title"><i class="fa-solid fa-file-excel" style="color:#22c55e;"></i> Libro Excel: Framework de Estandarización Operativa & QA — Chero Films</div>
+              <div class="book-controls">
+                <button class="book-btn fullscreen-btn" onclick="toggleBookFullscreen('xlsx-chero')"><i class="fa-solid fa-expand"></i> Pantalla Completa</button>
+              </div>
+            </div>
+            <div class="xlsx-tabs-bar" id="xlsx-chero-tabs"></div>
+            <div class="xlsx-sheet-stage" id="xlsx-chero-stage">Cargando hojas de cálculo interactivas...</div>
+          </div>
+
+          <!-- Libro PDF Estrategia de contenidos y lives -->
+          <div class="book-viewer-container" id="pdf-chero-lives">
+            <div class="book-toolbar">
+              <div class="book-title"><i class="fa-solid fa-book-open" style="color:#e879f9;"></i> Estrategia de Contenidos y Lives — Chero Films</div>
+              <div class="book-controls">
+                <button class="book-btn" onclick="changePdfPage('pdf-chero-lives', -1)"><i class="fa-solid fa-chevron-left"></i> Anterior</button>
+                <span class="page-indicator" id="pdf-chero-lives-info">Página 1 / --</span>
+                <button class="book-btn" onclick="changePdfPage('pdf-chero-lives', 1)">Siguiente <i class="fa-solid fa-chevron-right"></i></button>
+                <button class="book-btn fullscreen-btn" onclick="toggleBookFullscreen('pdf-chero-lives')"><i class="fa-solid fa-expand"></i> Pantalla Completa</button>
+              </div>
+            </div>
+            <div class="pdf-book-stage">
+              <button class="pdf-stage-arrow pdf-arrow-prev" onclick="changePdfPage('pdf-chero-lives', -1)" aria-label="Página anterior"><i class="fa-solid fa-chevron-left"></i></button>
+              <div class="pdf-canvas-wrapper" id="pdf-chero-lives-wrap">
+                <canvas id="pdf-chero-lives-canvas"></canvas>
+              </div>
+              <button class="pdf-stage-arrow pdf-arrow-next" onclick="changePdfPage('pdf-chero-lives', 1)" aria-label="Página siguiente"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+          </div>
+
+          <div class="video-grid">
+            <div class="video-card">
+              <div class="video-embed-box">
+                <iframe src="https://www.youtube.com/embed/7-XpS_bN76Q" title="Sistema de Intake Chero Films" allowfullscreen></iframe>
+              </div>
+              <div class="video-info">
+                <span class="video-stats-badge">Automatización & Triage de Prospectos</span>
+                <h4>Flujo del Sistema de Intake & Clasificación Automática (Tiers A, B y C)</h4>
+                <p>Demostración del flujo completo: desde que el prospecto llena el formulario de Google hasta su categorización automática en Google Sheets según nivel de conocimiento y alcance del proyecto para agendar sesiones estratégicas integrales.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="editorial-feature-row">
+            <div class="editorial-text-col">
+              <span class="editorial-tag"><i class="fa-solid fa-diagram-project"></i> Sistema de Intake & Triage</span>
+              <h4 class="editorial-title"><i class="fa-solid fa-filter" style="color:#f59e0b;"></i> Flujo Automatizado de Intake & Clasificación por Tiers</h4>
+              <p class="editorial-body">Arquitectura técnica de captación: enrutamiento inteligente desde Google Forms hacia Google Sheets con categorización automática de prospectos (Tiers A, B y C) según nivel de madurez, presupuesto y alcance para optimizar la atención comercial.</p>
+            </div>
+            <div class="editorial-img-col" onclick="openLightbox(this)">
+              <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/c511e60fd2c17c380dcfa503dcf5fc5fa8b3d00c/formulario%20sistema%20de%20intake.png" alt="Sistema de Intake y Triage Chero Films">
+              <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ampliar</span>
+            </div>
+          </div>
+
+          <div class="editorial-panoramic-card">
+            <div class="panoramic-img-box" onclick="openLightbox(this)">
+              <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/da2d3765881ecd66ec469ff44dff3c758fff9c33/Banner%20Cheros%20Films.png" alt="Banner Chero Films">
+              <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ampliar</span>
+            </div>
+            <div class="media-caption" style="margin-top:10px;"><i class="fa-solid fa-image" style="color:#f59e0b;"></i> Diseño de cabecera institucional panorámica para el Formulario de Atención Personalizada — Chero Films.</div>
+          </div>
+        </div>
+
+        <!-- MOM MADE BAKERY -->
+        <div class="brand-block">
+          <div class="brand-header">
+            <span class="brand-tag">Bases, Auditoría & Copywriting Gastronómico</span>
+            <h3>Mom Made Bakery — Research, Auditoría de Marca & Redacción Creativa</h3>
+            <p>Investigación de mercado, análisis competitivo y desarrollo de pilares de contenido con copywriting emocional orientado a conversión en redes sociales.</p>
+          </div>
+
+          <div class="book-viewer-container" id="xlsx-mom">
+            <div class="book-toolbar">
+              <div class="book-title"><i class="fa-solid fa-file-excel" style="color:#22c55e;"></i> Libro Excel: Mom Made Bakery Marketing Research & Audit v1.0</div>
+              <div class="book-controls">
+                <button class="book-btn fullscreen-btn" onclick="toggleBookFullscreen('xlsx-mom')"><i class="fa-solid fa-expand"></i> Pantalla Completa</button>
+              </div>
+            </div>
+            <div class="xlsx-tabs-bar" id="xlsx-mom-tabs"></div>
+            <div class="xlsx-sheet-stage" id="xlsx-mom-stage">Cargando hojas de cálculo interactivas...</div>
+          </div>
+
+          <div class="magazine-section-header">
+            <div class="magazine-eyebrow"><i class="fa-solid fa-pen-fancy"></i> Copywriting Gastronómico & Conversión</div>
+            <h4 class="magazine-title"><i class="fa-solid fa-feather-pointed" style="color:#f472b6;"></i> Redacción Estratégica & Copys para Posts — Mom Made Bakery</h4>
+            <p class="magazine-desc">Estructuración de textos con ganchos emocionales, storytelling dulce y llamadas a la acción diseñadas para conectar con la audiencia y potenciar ventas.</p>
+          </div>
+
+          <div class="editorial-feature-row">
+            <div class="editorial-text-col">
+              <span class="editorial-tag"><i class="fa-solid fa-gift"></i> Campaña Aniversario & Giveaway</span>
+              <h4 class="editorial-title"><i class="fa-solid fa-cake-candles" style="color:#f472b6;"></i> Propuesta de Post #1: Celebración Aniversario</h4>
+              <p class="editorial-body">Copy para post conmemorativo orientado a engagement orgánico masivo mediante sorteo de aniversario y llamado a la acción claro:</p>
+              <div class="editorial-copy-quote">
+<strong>Copy para Post:</strong>
+Haznos parte de tus vacaciones. ✨
+
+Un plan fuera de casa siempre se disfruta más con algo dulce para compartir. Por nuestro aniversario queremos celebrar contigo y regalarte un momento muy Mom Made. 🤍
+
+Para participar, sigue los pasos indicados en el arte y cruza los dedos. <strong>Sweet moments are better when shared.</strong>
+
+¡Mucha suerte! ✨
+#MomMadeBakery #Giveaway #AniversarioMomMade #SweetMoments
+              </div>
+            </div>
+            <div class="editorial-img-col" onclick="openLightbox(this)">
+              <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/eb4bc93b81cdc8232962b8ac503eef2e124384d2/copy%201.png" alt="Copy 1 Mom Made Bakery">
+              <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ampliar</span>
+            </div>
+          </div>
+
+          <div class="editorial-feature-row reverse-layout">
+            <div class="editorial-text-col">
+              <span class="editorial-tag"><i class="fa-solid fa-ice-cream"></i> Antojo & Lanzamiento de Producto</span>
+              <h4 class="editorial-title"><i class="fa-solid fa-spoon" style="color:#f472b6;"></i> Propuesta de Post #2: El Cuchareable Estrella</h4>
+              <p class="editorial-body">Copy persuasivo de antojo sensorial con pregunta abierta final para estimular comentarios e interacción en la comunidad:</p>
+              <div class="editorial-copy-quote">
+<strong>Copy para Post:</strong>
+El cuchareable que empezó todo. ✨
+
+Pequeño en tamaño, enorme en sabor y perfecto para darte ese gustito que estabas esperando. Una cucharada lleva a otra... y cuando te das cuenta, ya quieres probarlos todos. 🤎
+
+Which one would you try first?
+
+#MomMadeBakery #Cuchareables #SweetCravings #PostresElSalvador
+              </div>
+            </div>
+            <div class="editorial-img-col" onclick="openLightbox(this)">
+              <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/eb4bc93b81cdc8232962b8ac503eef2e124384d2/copy%202%20mom%20made.png" alt="Copy 2 Mom Made Bakery">
+              <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ampliar</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- GALERÍA NEBULOSA ESTRATEGIA -->
+        <div class="brand-block">
+          <div class="brand-header">
+            <span class="brand-tag">Proyecto de Autor & Marca Registrada • CEO & Fundadora</span>
+            <h3>Galería Nebulosa — Arquitectura Estratégica, Power BI & Posicionamiento</h3>
+            <p>Dirección integral de marca propia: diagnóstico continuo, benchmarking, modelo de negocio, control de KPIs mediante matriz viva y cronograma dinámico en Power BI.</p>
+          </div>
+
+          <!-- Google Sheets Embed con Pantalla Completa -->
+          <div class="book-viewer-container" id="gsheet-gn">
+            <div class="book-toolbar">
+              <div class="book-title"><i class="fa-solid fa-table" style="color:#38bdf8;"></i> Master Workbook de Diagnóstico & Control (Matriz Viva GN)</div>
+              <div class="book-controls">
+                <a href="https://docs.google.com/spreadsheets/d/1PgRHk7wKfB9L29RXpkZR_-i0jaTMcAZA0-SvYxEVsVg/edit?usp=sharing" target="_blank" class="book-btn"><i class="fa-solid fa-arrow-up-right-from-square"></i> Abrir en Drive</a>
+                <button class="book-btn fullscreen-btn" onclick="toggleBookFullscreen('gsheet-gn')"><i class="fa-solid fa-expand"></i> Pantalla Completa</button>
+              </div>
+            </div>
+            <div class="pdf-book-stage" style="padding:0;">
+              <iframe src="https://docs.google.com/spreadsheets/d/1PgRHk7wKfB9L29RXpkZR_-i0jaTMcAZA0-SvYxEVsVg/preview" style="width:100%; height:480px; border:none;"></iframe>
+            </div>
+          </div>
+
+          <div class="editorial-feature-row">
+            <div class="editorial-text-col">
+              <span class="editorial-tag"><i class="fa-solid fa-chart-line"></i> Power BI & Business Intelligence</span>
+              <h4 class="editorial-title"><i class="fa-solid fa-calendar-days" style="color:#a855f7;"></i> Cronograma y Mapa de Calor Dinámico de Ejecución de Proyecto</h4>
+              <p class="editorial-body">Tablero analítico desarrollado en Power BI para la supervisión y control temporal de fases, entregables e hitos críticos de Galería Nebulosa. Emplea mapas de calor visuales para detectar cuellos de botella y asegurar el cumplimiento de plazos con precisión operativa.</p>
+            </div>
+            <div class="editorial-img-col" onclick="openLightbox(this)">
+              <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/625009325505d6c19d96406b5d8016ecf54a83c9/Diagrama%20de%20Gantt%20GN.png" alt="Diagrama de Gantt Power BI GN">
+              <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ampliar</span>
+            </div>
+          </div>
+
+          <div class="editorial-feature-row reverse-layout">
+            <div class="editorial-text-col">
+              <span class="editorial-tag"><i class="fa-solid fa-bullseye"></i> Inbound & Embudo Narrativo</span>
+              <h4 class="editorial-title"><i class="fa-solid fa-cubes" style="color:#38bdf8;"></i> Arquitectura de Embudo Narrativo: Los 4 Pilares Curatoriales</h4>
+              <p class="editorial-body">Estructura estratégica de contenidos omnicanal que acompaña el viaje del usuario: desde la atracción mediante manifiesto inspirador, pasando por la validación técnica del jurado, hasta la fidelización e ingreso oficial a la comunidad de Galería Nebulosa.</p>
+            </div>
+            <div class="editorial-img-col" onclick="openLightbox(this)">
+              <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/8e109975c411d99b076fdcbba83afcf6f1788627/redes%20sociales%20GN%201.png" alt="Embudo educativo 4 pilares GN">
+              <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ampliar</span>
+            </div>
+          </div>
+
+          <div class="editorial-feature-row">
+            <div class="editorial-text-col">
+              <span class="editorial-tag"><i class="fa-solid fa-crown"></i> Posicionamiento & Marca Personal</span>
+              <h4 class="editorial-title"><i class="fa-solid fa-wand-magic-sparkles" style="color:#f472b6;"></i> Campaña de Posicionamiento & Autoridad: Fusión Artista & Estratega</h4>
+              <p class="editorial-body">Campaña conceptual que proyecta el valor del perfil híbrido: la articulación armónica entre la sensibilidad artística y el rigor analítico del performance marketing para concebir marcas de alta resonancia cultural y comercial.</p>
+            </div>
+            <div class="editorial-img-col" onclick="openLightbox(this)">
+              <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/8e109975c411d99b076fdcbba83afcf6f1788627/redes%20sociales%20GN%202.png" alt="Posicionamiento artista estratega GN">
+              <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ampliar</span>
+            </div>
+          </div>
+
+          <!-- Embeds de Instagram GN -->
+          <div class="social-embeds-grid">
+            <div class="ig-embed-frame">
+              <iframe src="https://www.instagram.com/p/Dfh3zphGnpv/embed" scrolling="no" allowtransparency="true"></iframe>
+            </div>
+            <div class="ig-embed-frame">
+              <iframe src="https://www.instagram.com/p/DfnMtocGoJe/embed" scrolling="no" allowtransparency="true"></iframe>
+            </div>
+            <div class="ig-embed-frame">
+              <iframe src="https://www.instagram.com/p/DfVBe5BMAbt/embed" scrolling="no" allowtransparency="true"></iframe>
+            </div>
+          </div>
+        </div>
+
+        <!-- GRUPO SAYTEC & TESTING EL SALVADOR -->
+        <div class="brand-block">
+          <div class="brand-header">
+            <span class="brand-tag">Analista en Marketing Digital • Corporativo B2B</span>
+            <h3>Grupo Saytec & Testing El Salvador — Estrategia Corporativa y Contenido</h3>
+            <p>Desarrollo de contenido gráfico y audiovisual, campañas digitales, copywriting técnico y planificación de marketing para múltiples unidades de negocio del grupo.</p>
+          </div>
+
+          <div class="book-viewer-container" id="pdf-saytec-est">
+            <div class="book-toolbar">
+              <div class="book-title"><i class="fa-solid fa-book-open" style="color:#e879f9;"></i> Libro Estratégico: Grupo Saytec (Campañas & Planificación)</div>
+              <div class="book-controls">
+                <button class="book-btn" onclick="changePdfPage('pdf-saytec-est', -1)"><i class="fa-solid fa-chevron-left"></i> Anterior</button>
+                <span class="page-indicator" id="pdf-saytec-est-info">Página 1 / --</span>
+                <button class="book-btn" onclick="changePdfPage('pdf-saytec-est', 1)">Siguiente <i class="fa-solid fa-chevron-right"></i></button>
+                <button class="book-btn fullscreen-btn" onclick="toggleBookFullscreen('pdf-saytec-est')"><i class="fa-solid fa-expand"></i> Pantalla Completa</button>
+              </div>
+            </div>
+            <div class="pdf-book-stage">
+              <button class="pdf-stage-arrow pdf-arrow-prev" onclick="changePdfPage('pdf-saytec-est', -1)" aria-label="Página anterior"><i class="fa-solid fa-chevron-left"></i></button>
+              <div class="pdf-canvas-wrapper" id="pdf-saytec-est-wrap">
+                <canvas id="pdf-saytec-est-canvas"></canvas>
+              </div>
+              <button class="pdf-stage-arrow pdf-arrow-next" onclick="changePdfPage('pdf-saytec-est', 1)" aria-label="Página siguiente"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+          </div>
+
+          <div class="book-viewer-container" id="pdf-testing-sv">
+            <div class="book-toolbar">
+              <div class="book-title"><i class="fa-solid fa-book-open" style="color:#38bdf8;"></i> Libro Horizontal: Marketing & Diseño — Testing El Salvador</div>
+              <div class="book-controls">
+                <button class="book-btn" onclick="changePdfPage('pdf-testing-sv', -1)"><i class="fa-solid fa-chevron-left"></i> Anterior</button>
+                <span class="page-indicator" id="pdf-testing-sv-info">Página 1 / --</span>
+                <button class="book-btn" onclick="changePdfPage('pdf-testing-sv', 1)">Siguiente <i class="fa-solid fa-chevron-right"></i></button>
+                <button class="book-btn fullscreen-btn" onclick="toggleBookFullscreen('pdf-testing-sv')"><i class="fa-solid fa-expand"></i> Pantalla Completa</button>
+              </div>
+            </div>
+            <div class="pdf-book-stage">
+              <button class="pdf-stage-arrow pdf-arrow-prev" onclick="changePdfPage('pdf-testing-sv', -1)" aria-label="Página anterior"><i class="fa-solid fa-chevron-left"></i></button>
+              <div class="pdf-canvas-wrapper" id="pdf-testing-sv-wrap">
+                <canvas id="pdf-testing-sv-canvas"></canvas>
+              </div>
+              <button class="pdf-stage-arrow pdf-arrow-next" onclick="changePdfPage('pdf-testing-sv', 1)" aria-label="Página siguiente"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- PERFORMANCE ADS (YOUTUBE) & E-COMMERCE (ETSY) -->
+        <div class="brand-block">
+          <div class="brand-header">
+            <span class="brand-tag">Inbound, Performance Ads & E-Commerce Global (2020 – 2025)</span>
+            <h3>Casos de Éxito: Pauta Optimizada ($50.84 USD → +120K Impresiones) & Tienda Etsy</h3>
+            <p><strong>Performance Marketing:</strong> Campañas en Google Ads y Meta Ads para Creative Art Violeta logrando +120K impresiones y +13K reproducciones con $50.84 USD.<br>
+            <strong>E-commerce OriginalAestheShop (Etsy):</strong> 5 años liderando SEO internacional (64% tráfico Google, 35% Bing), automatización post-venta (CX) y productos digitales escalables.</p>
+          </div>
+
+          <!-- Libro PDF Canal de YouTube Ads -->
+          <div class="book-viewer-container" id="pdf-yt-ads">
+            <div class="book-toolbar">
+              <div class="book-title"><i class="fa-solid fa-book-open" style="color:#f472b6;"></i> Caso de Éxito Performance: Google Ads, Meta Ads & YouTube</div>
+              <div class="book-controls">
+                <button class="book-btn" onclick="changePdfPage('pdf-yt-ads', -1)"><i class="fa-solid fa-chevron-left"></i> Anterior</button>
+                <span class="page-indicator" id="pdf-yt-ads-info">Página 1 / --</span>
+                <button class="book-btn" onclick="changePdfPage('pdf-yt-ads', 1)">Siguiente <i class="fa-solid fa-chevron-right"></i></button>
+                <button class="book-btn fullscreen-btn" onclick="toggleBookFullscreen('pdf-yt-ads')"><i class="fa-solid fa-expand"></i> Pantalla Completa</button>
+              </div>
+            </div>
+            <div class="pdf-book-stage">
+              <button class="pdf-stage-arrow pdf-arrow-prev" onclick="changePdfPage('pdf-yt-ads', -1)" aria-label="Página anterior"><i class="fa-solid fa-chevron-left"></i></button>
+              <div class="pdf-canvas-wrapper" id="pdf-yt-ads-wrap">
+                <canvas id="pdf-yt-ads-canvas"></canvas>
+              </div>
+              <button class="pdf-stage-arrow pdf-arrow-next" onclick="changePdfPage('pdf-yt-ads', 1)" aria-label="Página siguiente"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+          </div>
+
+          <!-- Libro PDF Tienda en Etsy -->
+          <div class="book-viewer-container" id="pdf-etsy">
+            <div class="book-toolbar">
+              <div class="book-title"><i class="fa-solid fa-book-open" style="color:#e879f9;"></i> Estrategia SEO E-Commerce & Reseñas Internacionales — OriginalAestheShop (Etsy)</div>
+              <div class="book-controls">
+                <button class="book-btn" onclick="changePdfPage('pdf-etsy', -1)"><i class="fa-solid fa-chevron-left"></i> Anterior</button>
+                <span class="page-indicator" id="pdf-etsy-info">Página 1 / --</span>
+                <button class="book-btn" onclick="changePdfPage('pdf-etsy', 1)">Siguiente <i class="fa-solid fa-chevron-right"></i></button>
+                <button class="book-btn fullscreen-btn" onclick="toggleBookFullscreen('pdf-etsy')"><i class="fa-solid fa-expand"></i> Pantalla Completa</button>
+              </div>
+            </div>
+            <div class="pdf-book-stage">
+              <button class="pdf-stage-arrow pdf-arrow-prev" onclick="changePdfPage('pdf-etsy', -1)" aria-label="Página anterior"><i class="fa-solid fa-chevron-left"></i></button>
+              <div class="pdf-canvas-wrapper" id="pdf-etsy-wrap">
+                <canvas id="pdf-etsy-canvas"></canvas>
+              </div>
+              <button class="pdf-stage-arrow pdf-arrow-next" onclick="changePdfPage('pdf-etsy', 1)" aria-label="Página siguiente"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+          </div>
+
+          <!-- Título Llamativo de Reseñas Estilo Revista / Jordi Segura -->
+          <div class="magazine-section-header">
+            <div class="magazine-eyebrow"><i class="fa-solid fa-star" style="color:#fbbf24;"></i> Social Proof & Testimonios Verificados</div>
+            <h4 class="magazine-title"><i class="fa-solid fa-comments" style="color:#f472b6;"></i> Reseñas de Clientes Internacionales — OriginalAestheShop (Etsy)</h4>
+            <p class="magazine-desc">Calificaciones de 5 estrellas otorgadas por compradores en Estados Unidos, Europa y Latinoamérica certificando la calidad gráfica, entrega inmediata y experiencia post-venta (CX).</p>
+          </div>
+
+          <div class="uniform-grid">
+            <div class="media-card">
+              <div class="uniform-img-box contain-mode" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/7dfe0fb55e739648593101e097c229a36cfe19db/Rese%C3%B1a%20Etsy%201.png" alt="Reseña Etsy 1">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Testimonio verificado de cliente internacional (5 estrellas) — Etsy.</div>
+            </div>
+            <div class="media-card">
+              <div class="uniform-img-box contain-mode" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/7dfe0fb55e739648593101e097c229a36cfe19db/Rese%C3%B1a%20Etsy%202.png" alt="Reseña Etsy 2">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Fidelización & Experiencia Post-Venta (CX) — Reseña #2.</div>
+            </div>
+            <div class="media-card">
+              <div class="uniform-img-box contain-mode" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/7dfe0fb55e739648593101e097c229a36cfe19db/Rese%C3%B1a%20Etsy%203.png" alt="Reseña Etsy 3">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Calidad de activos digitales y atención personalizada — Reseña #3.</div>
+            </div>
+            <div class="media-card">
+              <div class="uniform-img-box contain-mode" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/7dfe0fb55e739648593101e097c229a36cfe19db/Rese%C3%B1a%20Etsy%204.png" alt="Reseña Etsy 4">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Entrega automatizada inmediata y satisfacción de marca — Reseña #4.</div>
+            </div>
+            <div class="media-card">
+              <div class="uniform-img-box contain-mode" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/7dfe0fb55e739648593101e097c229a36cfe19db/Rese%C3%B1a%20Etsy%205.png" alt="Reseña Etsy 5">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Valoración internacional de productos digitales — Reseña #5.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. UI/UX, DESARROLLO WEB & AUTOMATIZACIÓN -->
+      <section id="sec-uiux" class="category-section" data-cat="uiux">
+        <div class="section-banner">
+          <div>
+            <h2>💻 Diseño UI/UX, Desarrollo Web & Automatización de Procesos</h2>
+            <p>Arquitectura web responsiva, experiencias de usuario centradas en conversión y soluciones de ingeniería sin código costoso mediante HTML, JS, CSS, WordPress, Google Sheets y Apps Script.</p>
+          </div>
+        </div>
+
+        <div class="brand-block">
+          <div class="brand-header">
+            <span class="brand-tag">Ecosistema Tecnológico • Galería Nebulosa</span>
+            <h3><i class="fa-solid fa-laptop-code" style="color:#e879f9;"></i> Plataforma Web, Membresías, Certificados con Apps Script & Evaluación a Ciegas</h3>
+            <div class="tech-stack-row" style="display:flex; flex-wrap:wrap; gap:8px; margin: 12px 0 18px;">
+              <span class="tech-pill"><i class="devicon-wordpress-plain" style="color:#38bdf8;"></i> WordPress</span>
+              <span class="tech-pill"><i class="devicon-html5-plain" style="color:#f97316;"></i> HTML5</span>
+              <span class="tech-pill"><i class="devicon-css3-plain" style="color:#38bdf8;"></i> CSS3</span>
+              <span class="tech-pill"><i class="devicon-javascript-plain" style="color:#eab308;"></i> JavaScript</span>
+              <span class="tech-pill"><i class="fa-brands fa-google" style="color:#34a853;"></i> Google Apps Script</span>
+              <span class="tech-pill"><i class="fa-solid fa-table" style="color:#22c55e;"></i> Google Sheets API</span>
+              <span class="tech-pill"><i class="fa-solid fa-envelope-open-text" style="color:#ec4899;"></i> Contact Form 7</span>
+              <span class="tech-pill"><i class="fa-solid fa-signature" style="color:#c084fc;"></i> Firma Digital en Pantalla</span>
+            </div>
+            <p>Diseño y desarrollo integral del ecosistema digital de Galería Nebulosa, unificando interfaz premium con flujos automatizados de extremo a extremo:</p>
+            <ul class="bullet-list">
+              <li><strong>Estructura Web & UX/UI Responsivo:</strong> Arquitectura de plataforma, páginas de fundadora, pasarela de membresías y experiencia optimizada para escritorio y dispositivos móviles.</li>
+              <li><strong>Sistema Automatizado de Emisión y Verificación de Certificados:</strong> Integración personalizada con WordPress, Google Sheets y <strong>Google Apps Script</strong> (sin plugins premium) para procesar registros y generar certificados descargables y verificables en <em>galerianebulosa.com</em>.</li>
+              <li><strong>Plataforma Privada de Evaluación a Ciegas para Jurados:</strong> Portal protegido por contraseña donde los jueces califican obras sin conocer la identidad del artista (evaluando fortalezas, debilidades y puntaje), centralizando automáticamente los dictámenes en Google Sheets.</li>
+              <li><strong>Automatización de Registro, Firma Digital & Credencial VIP:</strong> Formulario web con captura de semblanza, fotografía y <strong>firma manuscrita digital en pantalla</strong>, generación automática de acta ética en HTML/PDF enviada por correo y emisión de pase/credencial VIP digital.</li>
+            </ul>
+          </div>
+
+          <div class="uiux-showcase-grid">
+            <div class="uiux-floating-card">
+              <div class="uiux-transparent-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/fb705b34328fa953e5af4e31d5a99620324e09f7/1-Photoroom.png" alt="Web Escritorio y Móvil GN">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ampliar</span>
+              </div>
+              <div class="media-caption"><i class="fa-solid fa-desktop" style="color:#38bdf8;"></i> Diseño UI/UX Responsivo (Escritorio y Móvil) — Ecosistema Web Galería Nebulosa.</div>
+            </div>
+
+            <div class="uiux-floating-card">
+              <div class="uiux-transparent-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/be20ab631c1c5728668f08ac9c817e54a546b416/fundadora%20y%20membres%C3%ADa%20y%20pago-Photoroom.png" alt="UX Membresía y Pago GN">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ampliar</span>
+              </div>
+              <div class="media-caption"><i class="fa-solid fa-credit-card" style="color:#e879f9;"></i> Arquitectura UX de Conversión: Sección de Fundadora, Planes de Membresía y Flujo de Pago.</div>
+            </div>
+
+            <div class="uiux-floating-card">
+              <div class="uiux-transparent-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/f1fa7e72011be3ee19656a8af2b0a705b9300efc/certificados%20con%20app%20script-Photoroom.png" alt="Certificados con Google Apps Script">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ampliar</span>
+              </div>
+              <div class="media-caption"><i class="fa-solid fa-gears" style="color:#22c55e;"></i> Motor de Certificados Automatizados con Google Apps Script y Portal de Verificación Oficial.</div>
+            </div>
+
+            <div class="uiux-floating-card">
+              <div class="uiux-transparent-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/d2331a17f7e9b5372938224a9722a3c2dfeaa4b2/sistema%20para%20jueces%202.png" alt="Sistema de Evaluación a Ciegas para Jurado">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ampliar</span>
+              </div>
+              <div class="media-caption"><i class="fa-solid fa-user-secret" style="color:#f59e0b;"></i> Plataforma Privada de Evaluación a Ciegas (WordPress + HTML/JS/CSS + Google Sheets).</div>
+            </div>
+
+            <div class="uiux-floating-card">
+              <div class="uiux-transparent-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/6c4726c8dd16e0df3a803395febc8fe6d365ac45/gn%20vip.png" alt="Credencial VIP y Firma Digital Jurado">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ampliar</span>
+              </div>
+              <div class="media-caption"><i class="fa-solid fa-id-badge" style="color:#ec4899;"></i> Registro Legal Digital con Firma Manuscrita en Pantalla, Acta PDF Automática y Credencial VIP.</div>
+            </div>
+
+            <div class="uiux-floating-card">
+              <div class="uiux-transparent-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/fb705b34328fa953e5af4e31d5a99620324e09f7/laptop%20correo%20GN.png" alt="Automatización de Correos GN">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ampliar</span>
+              </div>
+              <div class="media-caption"><i class="fa-solid fa-paper-plane" style="color:#a855f7;"></i> Flujo Automatizado de Notificaciones Institucionales y Entrega de Credenciales vía Email.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. DISEÑO GRÁFICO, BRANDING E ILUSTRACIÓN -->
+      <section id="sec-diseno" class="category-section" data-cat="diseno">
+        <div class="section-banner">
+          <div>
+            <h2>🎨 Diseño Gráfico, Identidad de Marca & Dirección de Arte</h2>
+            <p>Conceptualización de identidades corporativas, campañas 360°, material POP, comunicación institucional universitaria, piezas editoriales e ilustración digital vectorial y rasterizada.</p>
+          </div>
+        </div>
+
+        <!-- IDENTIDAD GALERÍA NEBULOSA & ILUSTRACIÓN DIGITAL -->
+        <div class="brand-block">
+          <div class="brand-header">
+            <span class="brand-tag">Branding de Autor & Ilustración Digital</span>
+            <h3>Identidad Visual Galería Nebulosa & Proyectos de Ilustración Propia</h3>
+            <p>Desarrollo de logotipo conceptual ("Con Arte y No Artista"), línea gráfica espacial, piezas de manifiesto visual e ilustraciones creadas combinando técnicas vectoriales y de píxeles.</p>
+          </div>
+
+          <div class="uniform-grid">
+            <div class="media-card">
+              <div class="uniform-img-box contain-mode" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/5f22a52cc2d3557bbd8260bac8857b6451612ec8/dise%C3%B1o-de-logotipo-con-arte-y-no-artista.png" alt="Logotipo Galería Nebulosa">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ampliar</span>
+              </div>
+              <div class="media-caption">Logotipo Oficial & Construcción de Marca — Galería Nebulosa.</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box contain-mode" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/133681e90982d4f58682aa34c28f64c978812ffa/Frase%20para%20Galer%C3%ADa%20Nebulosa.png" alt="Pieza Editorial Frase GN">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ampliar</span>
+              </div>
+              <div class="media-caption">Dirección Tipográfica & Gráfica Editorial — Manifiesto @galeria_nebulosa.</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/c579c4cbad7fdbdf41acd1722d35c0773130e97a/Iustraciones%20digitales%201.png" alt="Ilustración Digital 1">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ampliar</span>
+              </div>
+              <div class="media-caption">Ilustración Digital Creativa #1 — Composición en píxeles y vectores.</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/c579c4cbad7fdbdf41acd1722d35c0773130e97a/Ilustraciones%20digitales%202.png" alt="Ilustración Digital 2">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ampliar</span>
+              </div>
+              <div class="media-caption">Ilustración Digital Creativa #2 — Exploración cromática y narrativa visual.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DIGILIFE (CAMPAÑAS 360 Y POP) -->
+        <div class="brand-block">
+          <div class="brand-header">
+            <span class="brand-tag">Dirección de Arte & Campañas 360° (2023)</span>
+            <h3>Digilife — Línea Gráfica Institucional, Material POP y Activaciones</h3>
+            <p>Liderazgo creativo en la conceptualización de campañas 360° B2B y B2C: desde arte para redes sociales y branding corporativo hasta diseño de stands, rótulos de gran formato y certificados de premiación presencial.</p>
+          </div>
+
+          <div class="uniform-grid">
+            <div class="media-card">
+              <div class="uniform-img-box contain-mode" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/64e1dea80caa82b3d473a5725bc8eeefc4636197/digilife%208.png" alt="Logo Digilife">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Identidad Visual & Aplicación de Logotipo — Digilife.</div>
+            </div>
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/64e1dea80caa82b3d473a5725bc8eeefc4636197/digilife%20premio.png" alt="Certificado Premiación Digilife">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Diseño de Certificado Gigante para Activación Presencial — Digilife.</div>
+            </div>
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/64e1dea80caa82b3d473a5725bc8eeefc4636197/digilife%20mesa.png" alt="Stand POP Digilife">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Producción de Material POP y Branding de Punto de Venta (Stand).</div>
+            </div>
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/64e1dea80caa82b3d473a5725bc8eeefc4636197/digilife%205.png" alt="Rótulo Gran Formato Digilife">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Diseño de Rótulo Exterior de Gran Formato — Digilife.</div>
+            </div>
+            <div class="media-card">
+              <div class="uniform-img-box square-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/64e1dea80caa82b3d473a5725bc8eeefc4636197/digilife%206.png" alt="Campaña San Valentín Digilife">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Pieza Publicitaria Campaña Mes de los Enamorados — 200 Mbps.</div>
+            </div>
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/64e1dea80caa82b3d473a5725bc8eeefc4636197/digilife%209.png" alt="Portada Campaña Digilife">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Portada Digital de Campaña Estacional — Digilife.</div>
+            </div>
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/64e1dea80caa82b3d473a5725bc8eeefc4636197/digilife%207.png" alt="Diseño Publicitario Digilife">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Diseño Comercial de Alta Conversión — Fibra Óptica Digilife.</div>
+            </div>
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/64e1dea80caa82b3d473a5725bc8eeefc4636197/digilife%204.png" alt="Pieza Promocional Digilife">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Gráfica Promocional para Redes Sociales — Digilife.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- GRUPO SAYTEC, SIMEC & UTEC -->
+        <div class="brand-block">
+          <div class="brand-header">
+            <span class="brand-tag">Diseño Corporativo, Infografías & Institucional</span>
+            <h3>Grupo Saytec, SIMEC & Universidad Tecnológica de El Salvador (UTEC)</h3>
+            <p>Piezas gráficas corporativas, infografías técnicas de procesos (SIMEC), placas de reconocimiento, invitaciones ejecutivas y campañas institucionales universitarias.</p>
+          </div>
+
+          <div class="book-viewer-container" id="pdf-saytec-dis">
+            <div class="book-toolbar">
+              <div class="book-title"><i class="fa-solid fa-book-open" style="color:#e879f9;"></i> Catálogo de Diseños Corporativos — Grupo Saytec</div>
+              <div class="book-controls">
+                <button class="book-btn" onclick="changePdfPage('pdf-saytec-dis', -1)"><i class="fa-solid fa-chevron-left"></i> Anterior</button>
+                <span class="page-indicator" id="pdf-saytec-dis-info">Página 1 / --</span>
+                <button class="book-btn" onclick="changePdfPage('pdf-saytec-dis', 1)">Siguiente <i class="fa-solid fa-chevron-right"></i></button>
+                <button class="book-btn fullscreen-btn" onclick="toggleBookFullscreen('pdf-saytec-dis')"><i class="fa-solid fa-expand"></i> Pantalla Completa</button>
+              </div>
+            </div>
+            <div class="pdf-book-stage">
+              <button class="pdf-stage-arrow pdf-arrow-prev" onclick="changePdfPage('pdf-saytec-dis', -1)" aria-label="Página anterior"><i class="fa-solid fa-chevron-left"></i></button>
+              <div class="pdf-canvas-wrapper" id="pdf-saytec-dis-wrap">
+                <canvas id="pdf-saytec-dis-canvas"></canvas>
+              </div>
+              <button class="pdf-stage-arrow pdf-arrow-next" onclick="changePdfPage('pdf-saytec-dis', 1)" aria-label="Página siguiente"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+          </div>
+
+          <div class="uniform-grid">
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/0cdf113ce4e36971a489bb7357846d9a5fb27ee0/utec%201.png" alt="Diseño Publicitario UTEC 1">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Diseño Publicitario Institucional #1 — Universidad Tecnológica de El Salvador (UTEC).</div>
+            </div>
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/0cdf113ce4e36971a489bb7357846d9a5fb27ee0/utec%202.png" alt="Diseño Publicitario UTEC 2">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Diseño Publicitario Institucional #2 — Universidad Tecnológica de El Salvador (UTEC).</div>
+            </div>
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/3a0bf029821dc6a496d466830b413b8211c23e08/Dise%C3%B1o%20de%20invitaci%C3%B3n%20SEL.png" alt="Invitación SEL">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Diseño de Invitación Ejecutiva SEL — Grupo Saytec.</div>
+            </div>
+            <div class="media-card">
+              <div class="uniform-img-box contain-mode" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/3a0bf029821dc6a496d466830b413b8211c23e08/banner%20para%20el%20formulario.png" alt="Banner Formulario Saytec">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Banner Corporativo para Formulario Digital — Grupo Saytec.</div>
+            </div>
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/59f50b19becce233e7bac6419fa4aa14a565ee22/Placa%20para%20colocarla.png" alt="Diseño de Placa Corporativa">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Arte Final para Placa Institucional de Reconocimiento.</div>
+            </div>
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/59f50b19becce233e7bac6419fa4aa14a565ee22/Mockup%20de%20placas%20reconocimiento.png" alt="Mockup Placas Reconocimiento">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Mockup 3D de Presentación — Placas de Reconocimiento Corporativo.</div>
+            </div>
+            <div class="media-card">
+              <div class="uniform-img-box square-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/59f50b19becce233e7bac6419fa4aa14a565ee22/Infograf%C3%ADa-SIMEC-primera-pieza.png" alt="Infografía SIMEC 1">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Serie Infográfica SIMEC (Pieza 1) — Visualización de datos y procesos.</div>
+            </div>
+            <div class="media-card">
+              <div class="uniform-img-box square-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/59f50b19becce233e7bac6419fa4aa14a565ee22/Infograf%C3%ADa-SIMEC-segunda-pieza-CORREGIDA.png" alt="Infografía SIMEC 2">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Serie Infográfica SIMEC (Pieza 2) — Arquitectura informativa.</div>
+            </div>
+            <div class="media-card">
+              <div class="uniform-img-box square-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/59f50b19becce233e7bac6419fa4aa14a565ee22/Infograf%C3%ADa-SIMEC-tercera-pieza.png" alt="Infografía SIMEC 3">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Serie Infográfica SIMEC (Pieza 3) — Cierre de flujo técnico.</div>
+            </div>
+            <div class="media-card">
+              <div class="uniform-img-box square-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/59f50b19becce233e7bac6419fa4aa14a565ee22/Fase%205%20SIMEC%20imagen.png" alt="Fase 5 SIMEC">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Implementación Fase 5 SIMEC — Comunicación visual corporativa.</div>
+            </div>
+            <div class="media-card">
+              <div class="uniform-img-box square-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/59f50b19becce233e7bac6419fa4aa14a565ee22/Carrusel-1080-x-1080-primero.png" alt="Carrusel Corporativo 1">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Carrusel Educativo/Comercial (Slide 1 — 1080x1080).</div>
+            </div>
+            <div class="media-card">
+              <div class="uniform-img-box square-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/59f50b19becce233e7bac6419fa4aa14a565ee22/Carrusel-1080-x-1080-segundo.png" alt="Carrusel Corporativo 2">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Carrusel Educativo/Comercial (Slide 2 — 1080x1080).</div>
+            </div>
+            <div class="media-card">
+              <div class="uniform-img-box square-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/59f50b19becce233e7bac6419fa4aa14a565ee22/Urgencia%20de%20Calendario.png" alt="Urgencia de Calendario">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Pieza de Llamado a la Acción — Urgencia de Calendario Corporativo.</div>
+            </div>
+            <div class="media-card">
+              <div class="uniform-img-box square-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/59f50b19becce233e7bac6419fa4aa14a565ee22/Tarjeta%20de%20invitaci%C3%B3n%20corporativa%20para%20coctel.png" alt="Invitación Coctel Corporativo">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Tarjeta de Invitación Corporativa para Cóctel Empresarial.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- AGENCIA DE MARKETING TRIDENTE (18 PIEZAS MULTIMARCA) -->
+        <div class="brand-block">
+          <div class="brand-header">
+            <span class="brand-tag">Agencia de Marketing Tridente (2023)</span>
+            <h3>Adaptabilidad de Tono de Marca & Conceptualización Multimarca</h3>
+            <p>Manejo y adaptabilidad de la identidad visual de múltiples marcas (cooperativas corporativas vs. marcas de entretenimiento) para efemérides y campañas de alto engagement orgánico.</p>
+          </div>
+          <div class="uniform-grid" id="tridente-gallery"></div>
+        </div>
+      </section>
+
+      <!-- 4. PRODUCCIÓN AUDIOVISUAL -->
+      <section id="sec-audiovisual" class="category-section" data-cat="audiovisual">
+        <div class="section-banner">
+          <div>
+            <h2>🎬 Producción Audiovisual, Storytelling & Contenido Viral</h2>
+            <p>Documentales históricos, video ensayos con animación 3D, Shorts de alta retención (+22K vistas) y reels corporativos dinámicos.</p>
+          </div>
+        </div>
+
+        <!-- CANAL CREATIVE ART VIOLETA -->
+        <div class="brand-block">
+          <div class="brand-header">
+            <span class="brand-tag">Creative Art Violeta • YouTube & TikTok</span>
+            <h3>Dirección, Guion, Montaje Documental & Retención Vertical</h3>
+            <p>Producciones audiovisuales originales que combinan investigación histórica, arte, diseño sonoro envolvente, motion graphics y edición dinámica orientada a retención.</p>
+          </div>
+
+          <div class="video-grid">
+            <!-- 1. Conflicto Armado -->
+            <div class="video-card">
+              <div class="video-embed-box">
+                <iframe src="https://www.youtube.com/embed/zZmqKr0wVhU?start=201" title="Arte del Conflicto Armado de El Salvador" allowfullscreen></iframe>
+              </div>
+              <div class="video-info">
+                <span class="video-stats-badge">Mini Documental / Video Ensayo • +13.9K vistas</span>
+                <h4>1. Arte del Conflicto Armado de El Salvador</h4>
+                <p><strong>Enfoque y edición:</strong> Producción audiovisual de 6:36 min con montaje estilo documental. Integra archivos de prensa histórica animada [04:33, 05:19], fotografías de época en blanco y negro [04:43], marcos de televisión retro [00:06], collages gráficos con movimiento [00:25, 02:35], tomas macro del proceso pictórico [01:22], diseño sonoro dramático y locución narrativa de alto impacto emocional.</p>
+              </div>
+            </div>
+
+            <!-- 4. Zeus y Prometeo -->
+            <div class="video-card">
+              <div class="video-embed-box">
+                <iframe src="https://www.youtube.com/embed/cB_phrVMIYM?start=58" title="Zeus y Prometeo: Mitología Griega con Arte Surrealista" allowfullscreen></iframe>
+              </div>
+              <div class="video-info">
+                <span class="video-stats-badge">Video Ensayo • +4.7K vistas</span>
+                <h4>4. Zeus y Prometeo: Mitología Griega con Arte Surrealista</h4>
+                <p><strong>Enfoque y edición:</strong> Producción audiovisual de formato largo (5:49 min) que integra intro animada en 3D [00:00], cortinillas gráficas estilo collage en movimiento [00:40], transiciones dramáticas con efectos de fuego y rayos [00:34, 01:55], montaje multicapa entre tomas de estudio/exteriores y recursos visuales conceptuales [00:08, 02:50], además de diseño sonoro envolvente y locución expresiva.</p>
+              </div>
+            </div>
+
+            <!-- 2. Arte con Café -->
+            <div class="video-card">
+              <div class="video-embed-box vertical-video">
+                <iframe src="https://www.youtube.com/embed/wRvYZo4FZJk?start=13" title="Arte con Café: Mágico González y El Cipitío" allowfullscreen></iframe>
+              </div>
+              <div class="video-info">
+                <span class="video-stats-badge">YouTube Short • +15.9K vistas</span>
+                <h4>2. Arte con Café: Mágico González y El Cipitío</h4>
+                <p><strong>Enfoque y edición:</strong> Pieza vertical con estructura de gancho inicial (resultado final en los primeros 3 segundos), transiciones dinámicas entre cámara en mano, proceso en time-lapse e imágenes históricas de apoyo [00:22], además de voz en off narrativa con ritmo ágil y cierre interactivo (call to action) para fomentar comentarios [01:34].</p>
+              </div>
+            </div>
+
+            <!-- 3. Curiosidades Literarias -->
+            <div class="video-card">
+              <div class="video-embed-box vertical-video">
+                <iframe src="https://www.youtube.com/embed/KmtBfp_9zXk" title="Curiosidades Literarias: Hermann Hesse y Siddhartha" allowfullscreen></iframe>
+              </div>
+              <div class="video-info">
+                <span class="video-stats-badge">YouTube Short • +22.1K vistas</span>
+                <h4>3. Curiosidades Literarias: Hermann Hesse y Siddhartha</h4>
+                <p><strong>Enfoque y edición:</strong> Pieza vertical de 33 segundos optimizada para retención en redes sociales. Incluye gancho inicial de curiosidad ("¿Sabías qué..."), subtítulos dinámicos palabra por palabra de alto contraste, cambios constantes de plano con zoom fluido, música ambiental envolvente y apoyo visual continuo para sostener el ritmo narrativo de principio a fin.</p>
+              </div>
+            </div>
+
+            <!-- 5. TikTok Embed -->
+            <div class="video-card">
+              <div class="video-embed-box vertical-video">
+                <iframe src="https://www.tiktok.com/embed/v2/7642553173194001677" title="El Relicario de la Memoria y la Voz" allowfullscreen></iframe>
+              </div>
+              <div class="video-info">
+                <span class="video-stats-badge">TikTok / Short • +1.8K vistas</span>
+                <h4>5. El Relicario de la Memoria y la Voz: Identidad Cultural</h4>
+                <p><strong>Enfoque y edición:</strong> Pieza vertical de 34 segundos con formato talking head (cámara directa con micrófono) y gancho emocional desde el primer segundo. Destaca por su transición física mostrando la obra en cámara [00:04], zooms suaves hacia detalles clave de la pintura [00:14], subtítulos de énfasis [00:07] y pregunta abierta de cierre ("¿Y vos de qué lado estás?") para maximizar interacción [00:29].</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TESTING EL SALVADOR REELS & CORPORATIVO -->
+        <div class="brand-block">
+          <div class="brand-header">
+            <span class="brand-tag">Producción Audiovisual Corporativa • Testing El Salvador</span>
+            <h3>Campaña Mundial 2026, Reels Virales de Cultura Laboral & Video Institucional</h3>
+            <p>Conceptualización, dirección y edición de video reels dinámicos de alto alcance orgánico y video documental corporativo de marca.</p>
+          </div>
+
+          <div class="video-grid">
+            <div class="video-card">
+              <div class="video-embed-box">
+                <iframe src="https://www.youtube.com/embed/WNBG1WFeQGo" title="Historia de Testing El Salvador" allowfullscreen></iframe>
+              </div>
+              <div class="video-info">
+                <span class="video-stats-badge">Video Corporativo Largo Formato</span>
+                <h4>Historia y Trayectoria Institucional — Testing El Salvador</h4>
+                <p>Narrativa audiovisual corporativa destacando la evolución, infraestructura y respaldo técnico de la empresa.</p>
+              </div>
+            </div>
+
+            <div class="video-card">
+              <div class="video-embed-box vertical-video">
+                <iframe src="https://www.youtube.com/embed/QBuHV2823yA" title="Campaña Mundial 2026 Testing SV" allowfullscreen></iframe>
+              </div>
+              <div class="video-info">
+                <span class="video-stats-badge">Reel Viral • Campaña Mundial 2026</span>
+                <h4>Campaña MUNDIAL 2026 — Testing El Salvador</h4>
+                <p>Reel dinámico de tendencia con edición ágil que alcanzó viralidad orgánica en las redes sociales de la marca.</p>
+              </div>
+            </div>
+
+            <div class="video-card">
+              <div class="video-embed-box vertical-video">
+                <iframe src="https://www.youtube.com/embed/Xmi5B8yFyqM" title="Reel Corporativo Testing SV" allowfullscreen></iframe>
+              </div>
+              <div class="video-info">
+                <span class="video-stats-badge">Reel Dinámico</span>
+                <h4>Contenido Dinámico de Marca — Testing El Salvador</h4>
+                <p>Pieza vertical optimizada para visibilidad y conexión con audiencia técnica y comercial.</p>
+              </div>
+            </div>
+
+            <div class="video-card">
+              <div class="video-embed-box vertical-video">
+                <iframe src="https://www.youtube.com/embed/1y_6YZwtx-A" title="Reel Humor Corporativo Testing SV" allowfullscreen></iframe>
+              </div>
+              <div class="video-info">
+                <span class="video-stats-badge">Reel Cultura & Humor Laboral</span>
+                <h4>Personalidades en el Trabajo — Humanización de Marca</h4>
+                <p>Formato de humor corporativo diseñado para impulsar engagement, compartidos y cercanía con el equipo.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. MODELADO 3D & ENTORNOS VIRTUALES -->
+      <section id="sec-modelado3d" class="category-section" data-cat="modelado3d">
+        <div class="section-banner">
+          <div>
+            <h2>🧊 Modelado 3D, Shading & Entornos Virtuales Inmersivos</h2>
+            <p>Escultura digital orgánica, modelado de producto, texturizado procedural en Blender y Autodesk Maya, y arquitectura de salas 3D interactivas con física y colisiones.</p>
+          </div>
+        </div>
+
+        <div class="brand-block">
+          <div class="brand-header">
+            <span class="brand-tag">Blender 3D & Arquitectura WebGL</span>
+            <h3>Galería Nebulosa 3D — Sala de Fundadora & Exhibición Interactiva con Colisiones</h3>
+            <p>Diseño, optimización y personalización de espacios tridimensionales inmersivos con iluminación atmosférica, montaje curatorial de obras, trofeos 3D y navegación en primera persona.</p>
+          </div>
+
+          <div class="uniform-grid wide-cards">
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/af3e74c9bb55e8dc71714f0b8915e8c6f17c59e7/Galer%C3%ADa%20de%20Creative%20Art%20Violeta%203D.jpg" alt="Galería 3D Creative Art Violeta en Blender">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ampliar</span>
+              </div>
+              <div class="media-caption">Sala 3D Personalizada de Fundadora (Creative Art Violeta) — Modelado e iluminación en Blender.</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/af3e74c9bb55e8dc71714f0b8915e8c6f17c59e7/con%20trofeo.jpg" alt="Galería 3D Participantes con Trofeos">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ampliar</span>
+              </div>
+              <div class="media-caption">Sala Virtual de Participantes en Línea — Recorrido interactivo con colisiones ajustadas y trofeos 3D.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="brand-block">
+          <div class="brand-header">
+            <span class="brand-tag">Escultura Digital, Shading & Diseño Industrial 3D</span>
+            <h3>Modelado Orgánico, Renders de Producto en Blender & Prototipo en Maya 3D</h3>
+            <p>Exploración de materiales PBR (vidrio, metal, cerámica), escultura anatómica femenina y diseño industrial colaborativo de cargador portátil no convencional.</p>
+          </div>
+
+          <div class="uniform-grid">
+            <div class="media-card">
+              <div class="uniform-img-box contain-mode" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/9a4c5df94ec445249bd0369fe673edc404e3d728/Torso%20de%20mujer%20escultura.png" alt="Torso de mujer escultura 3D">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Escultura Digital Anatómica (Torso Femenino) — Esculpido y shading en Blender.</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box contain-mode" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/c540502cc42b38282f9bf86b5aec8b576bea6456/Jarr%C3%B3n%20elegante.png" alt="Jarrón elegante transparente">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Jarrón Decorativo de Alta Precisión (Render PNG sin fondo) — Blender.</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/9a4c5df94ec445249bd0369fe673edc404e3d728/jarron%20bonito.png" alt="Jarrón en escena 3D">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Estudio de Iluminación y Reflejos — Jarrón en entorno 3D.</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/9a4c5df94ec445249bd0369fe673edc404e3d728/botella%20de%20vino.png" alt="Botella de vino 3D">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Render de Producto & Shaders de Vidrio — Botella de Vino en Blender.</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/9a4c5df94ec445249bd0369fe673edc404e3d728/Bombita%20navide%C3%B1a.png" alt="Esfera navideña 3D">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Modelado & Texturizado Festivo — Esfera Navideña en Blender.</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/9a4c5df94ec445249bd0369fe673edc404e3d728/Pokebola.png" alt="Pokébola 3D">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Hard-Surface Modeling & Materiales Metálicos — Pokébola 3D.</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/5dfdd47d2d4af97eed3ef7d519fd3216f40ab056/cargador%201.png" alt="Cargador Portátil Maya 1">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Diseño Industrial en Autodesk Maya (Vista 1) — Cargador portátil no convencional.</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/5dfdd47d2d4af97eed3ef7d519fd3216f40ab056/cargador%202.png" alt="Cargador Portátil Maya 2">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Diseño Industrial en Autodesk Maya (Vista 2) — Ergonomía y detalles estructurales.</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/5dfdd47d2d4af97eed3ef7d519fd3216f40ab056/cargador%203.png" alt="Cargador Portátil Maya 3">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Diseño Industrial en Autodesk Maya (Vista 3) — Renderizado de conjunto.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. CÁTEDRA, DOCENCIA & MENTORÍA CREATIVA -->
+      <section id="sec-docencia" class="category-section" data-cat="docencia">
+        <div class="section-banner">
+          <div>
+            <h2>🎓 Cátedra Universitaria, Conferencias STEAM & Mentoría</h2>
+            <p>Experiencia comprobada como docente universitaria y tallerista en la Universidad Tecnológica de El Salvador (UTEC) e instituciones educativas, formando nuevas generaciones en arte, diseño y sostenibilidad.</p>
+          </div>
+        </div>
+
+        <div class="brand-block">
+          <div class="brand-header">
+            <span class="brand-tag">Experiencia Docente & Respaldo Institucional</span>
+            <h3>Cátedras Universitarias (UTEC), Masterclases, Conferencias STEAM y Talleres</h3>
+            <p>Impartición de asignaturas de diseño y dibujo, masterclases especializadas, conferencias STEAM y talleres de dibujo natural y diseño sostenible para estudiantes universitarios, bachilleres y adultos.<br>
+            <strong>Referencias Profesionales:</strong> +503 7618 6893 • +503 7097 5008</p>
+          </div>
+
+          <div class="uniform-grid">
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/42edffb7a8c0c1c173e4d49b63be9165aa9e3baa/5123317422428457854.jpg" alt="Cátedra universitaria UTEC">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Impartiendo Cátedra Universitaria en la UTEC.</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/42edffb7a8c0c1c173e4d49b63be9165aa9e3baa/5123317422428457856.jpg" alt="Clases universitarias">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Sesión Académica y Dirección de Proyectos en Aula Universitaria.</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/42edffb7a8c0c1c173e4d49b63be9165aa9e3baa/5123317422428457855.jpg" alt="Masterclase">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Impartiendo Masterclase Especializada en Diseño y Conceptualización.</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/42edffb7a8c0c1c173e4d49b63be9165aa9e3baa/Dando-charla-STEAM-1.jpg" alt="Conferencia STEAM">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Ponente en Conferencias STEAM — Integración de Arte, Ciencia y Tecnología.</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/42edffb7a8c0c1c173e4d49b63be9165aa9e3baa/5028458551390704098.jpg" alt="Talleres de dibujo UTEC">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Talleres Universitarios de Dibujo y Expresión Plástica en la UTEC.</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/42edffb7a8c0c1c173e4d49b63be9165aa9e3baa/revisando.jpg" alt="Revisando proyectos estudiantiles">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Mentoría Personalizada y Revisión Crítica de Proyectos Estudiantiles.</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/fcde938f4662ab5f28e1bc2e01ae585351e98ac9/talleres%201.png" alt="Talleres jóvenes y adultos 1">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Talleres Formativos de Diseño y Dibujo para Jóvenes Bachilleres y Adultos #1.</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/fcde938f4662ab5f28e1bc2e01ae585351e98ac9/talleres%202.png" alt="Talleres jóvenes y adultos 2">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Talleres Formativos de Diseño y Dibujo para Jóvenes Bachilleres y Adultos #2.</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/fcde938f4662ab5f28e1bc2e01ae585351e98ac9/talleres%203.png" alt="Talleres jóvenes y adultos 3">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Talleres Formativos de Diseño y Dibujo para Jóvenes Bachilleres y Adultos #3.</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box contain-mode" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/3858f571c414f308b28273722123450f6e362908/Constancia.png" alt="Constancia Laboral UTEC">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Constancia Oficial de Experiencia Laboral como Docente Auxiliar — UTEC.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7. PREMIOS, RECONOCIMIENTOS, OBRAS & PRENSA -->
+      <section id="sec-premios" class="category-section" data-cat="premios">
+        <div class="section-banner">
+          <div>
+            <h2>🏆 Premios Internacionales, Obras Galardonadas & Prensa</h2>
+            <p>Primeros lugares internacionales en branding y artes plásticas, reconocimientos en el Museo MARTE, Argentina, India, Estados Unidos y cobertura en medios nacionales e internacionales.</p>
+          </div>
+        </div>
+
+        <!-- PREMIOS DE ARTE Y EXPOSICIONES INTERNACIONALES -->
+        <div class="brand-block">
+          <div class="brand-header">
+            <span class="brand-tag">Galardones en Artes Plásticas (2025)</span>
+            <h3>Museo MARTE, Galería Gisel Durán (Argentina), India & Certámenes Globales</h3>
+            <p>Obras al óleo sobre lienzo premiadas y exhibidas en certámenes nacionales e internacionales de alto prestigio.</p>
+          </div>
+
+          <div class="uniform-grid">
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/ae31cfe51a98d8910be815f689bf0c46da89d8c0/MUSEO%20MARTE%20(El%20Salvador)%20Concurso%20MEMORABLE.png" alt="Obra Museo MARTE Fragmentos de una era rota">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Obra "Fragmentos de una era rota" (Óleo) — 3.er Lugar Concurso MEMORABLE, Museo MARTE (El Salvador, 2025).</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box contain-mode" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/ae31cfe51a98d8910be815f689bf0c46da89d8c0/MUSEO%20MARTE%20(El%20Salvador)%20Concurso%20MEMORABLE%20certificado.png" alt="Certificado Museo MARTE">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Certificado Oficial 3.er Lugar — Concurso MEMORABLE, Museo de Arte de El Salvador (MARTE).</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/3500b35226adb70bce96837966eeeb3d06f5ceea/El%20precio%20del%20fuego.jpg" alt="Obra El precio del fuego Prometeo">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Obra "El precio del fuego" (Óleo sobre lienzo) — 1.er Lugar Concurso Internacional Galería Gisel Durán (Argentina, 2025).</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box contain-mode" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/3500b35226adb70bce96837966eeeb3d06f5ceea/Concurso%20internacional%20de%20la%20Galer%C3%ADa%20Gisel%20Dur%C3%A1n%20(Argentina)%20certificado.png" alt="Certificado Galería Gisel Durán Argentina">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Certificado 1.er Lugar Internacional — Galería Gisel Durán (Argentina, 2025).</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/b225e462f647fc9b701f98a408ab858288fc68cd/Exposici%C3%B3n%20de%20mis%20obras.png" alt="Exposición Galería Gisel Durán">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Exposición Internacional en Argentina — Obras "Fragmentos de una era rota" y "Alas de renacimiento".</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box contain-mode" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/b225e462f647fc9b701f98a408ab858288fc68cd/certificado%20fragmentos%20de%20una%20era%20rota%20y%20alas%20de%20renacimiento.png" alt="Reconocimiento Exposición Argentina">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Certificado de Reconocimiento Internacional — Galería Gisel Durán (Argentina).</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box contain-mode" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/0279e925e4332a78188eeca63bb2fd780b8c375f/2.%C2%BA%20Lugar%20Internacional%20Certamen%20de%20Arte%20%26%20Talento%20(India)%20certificado.png" alt="2do Lugar Internacional India Certificado">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Certificado 2.º Lugar Internacional — Certamen de Arte & Talento (India, 2025).</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/0279e925e4332a78188eeca63bb2fd780b8c375f/2.%C2%BA%20Lugar%20Internacional%20Certamen%20de%20Arte%20%26%20Talento%20(India)%20trofeo%20memento.png" alt="Trofeo Memento India">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Trofeo / Memento Oficial — 2.º Lugar Internacional en India (2025).</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box contain-mode" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/0279e925e4332a78188eeca63bb2fd780b8c375f/2.%C2%BA%20Lugar%20Internacional%20Certamen%20de%20Arte%20%26%20Talento%20(India)%20correo.png" alt="Notificación Oficial Premio India">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Notificación Oficial del Jurado Internacional — Certamen de Arte & Talento (India).</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/f1a10e57134fa483cd089c37f5b3cd41933001d7/El%20juicio%20del%20drag%C3%B3n%20azul.jpg" alt="Obra El juicio del dragón azul">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Obra "El juicio del dragón azul" — Selección destacada en The Indian Art Fest (2025).</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box contain-mode" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/c3d6829dffc1a466f61106ae9c1544425b480a85/Certificado%20de%20aprecio%20The%20Indian%20Art%20Fest%202.png" alt="Certificado The Indian Art Fest">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Certificado de Aprecio — The Indian Art Fest 2025.</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box contain-mode" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/7adc2ea81126d523c610a1f91b7291dc51ad53e5/Finalista%20Internacional%20Certamen%20Her%20Canvas%20and%20Bold%20Colors%20finalista.png" alt="Certificado Finalista Her Canvas and Bold Colors">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Certificado Finalista Internacional — Certamen "Her Canvas and Bold Colors" (2025).</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/a8ec753d4ff81c2953ec63be41bf0b1c6f6e4bcf/Finalista%20Internacional%20Certamen%20Her%20Canvas%20and%20Bold%20Colors%201.png" alt="Exposición Web Her Canvas 1">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Exposición Web Oficial #1 — Certamen Internacional "Her Canvas and Bold Colors".</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/a8ec753d4ff81c2953ec63be41bf0b1c6f6e4bcf/Finalista%20Internacional%20Certamen%20Her%20Canvas%20and%20Bold%20Colors%202.png" alt="Exposición Web Her Canvas 2">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Exposición Web Oficial #2 — Certamen Internacional "Her Canvas and Bold Colors".</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PRIMEROS LUGARES INTERNACIONALES EN BRANDING (FREELANCER) -->
+        <div class="brand-block">
+          <div class="brand-header">
+            <span class="brand-tag">Concursos Internacionales de Diseño & Branding</span>
+            <h3>4 Primeros Lugares Internacionales en Diseño de Identidad (Freelancer)</h3>
+            <p>Ganadora frente a diseñadores de todo el mundo en certámenes internacionales de creación de marca.</p>
+          </div>
+          <div class="uniform-grid" id="freelancer-gallery"></div>
+        </div>
+
+        <!-- APARICIONES EN MEDIOS Y COBERTURA DE PRENSA -->
+        <div class="brand-block">
+          <div class="brand-header">
+            <span class="brand-tag">Prensa, Entrevistas & Difusión Cultural (2024 – 2026)</span>
+            <h3>Cobertura en Medios Nacionales e Internacionales</h3>
+            <p>Destacada por Diario El Mundo, elsalvador.com, Movida Hispana (EE. UU.), Grada (@grada.sv) y plataformas de difusión cultural.</p>
+          </div>
+
+          <div class="uniform-grid">
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/bd4cbcec7cb34c97b809442d6983f9ef4935b99b/diario%20el%20mundo%20y%20el%20salvador.png" alt="Diario El Mundo y elsalvador.com">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Reportajes en Diario El Mundo y elsalvador.com — Trayectoria artística y cultural.</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/1f5bbf338a20951dcca0e76455828f9f64fb3cd1/Apariciones%20en%20Medios%20%26%20Cobertura%20de%20Prensa%202024.png" alt="Cobertura de Prensa 2024 1">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Apariciones en Medios & Cobertura de Prensa (2024) — Nota #1.</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/1f5bbf338a20951dcca0e76455828f9f64fb3cd1/Apariciones%20en%20Medios%20%26%20Cobertura%20de%20Prensa%202%202024.png" alt="Cobertura de Prensa 2024 2">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Apariciones en Medios & Cobertura de Prensa (2024) — Nota #2.</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/d83519a4efc206c6b1649e54c7e41ecb22304c2c/Movida%20Hispana%201.png" alt="Movida Hispana EEUU 1">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Destacada por Movida Hispana (EE. UU., 2025) — Entrevista y publicación colaborativa #1.</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/d83519a4efc206c6b1649e54c7e41ecb22304c2c/Movida%20Hispana%202.png" alt="Movida Hispana EEUU 2">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Destacada por Movida Hispana (EE. UU., 2025) — Representando a El Salvador #2.</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/d83519a4efc206c6b1649e54c7e41ecb22304c2c/Movida%20Hispana%203.png" alt="Movida Hispana EEUU 3">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Destacada por Movida Hispana (EE. UU., 2025) — Reseña de propuesta artística #3.</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/b1340fe882f7c3bca2760d6ef231c7ad02972213/Grada%201.png" alt="Grada SV 2026 1">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Seleccionada por Grada (@grada.sv, 2026) — Perfil multidisciplinario en diseño, marcas y arte #1.</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/b1340fe882f7c3bca2760d6ef231c7ad02972213/Grada%202.png" alt="Grada SV 2026 2">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Seleccionada por Grada (@grada.sv, 2026) — Proceso creativo e identidad de marca #2.</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/a640ee90a061d4501949f584fe5d360a51847585/Influencers%20salvadore%C3%B1as.png" alt="Difusión Plataformas 1">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Difusión en Plataformas de Talento Salvadoreño #1.</div>
+            </div>
+
+            <div class="media-card">
+              <div class="uniform-img-box" onclick="openLightbox(this)">
+                <img src="https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/a640ee90a061d4501949f584fe5d360a51847585/Influencers%20salvadore%C3%B1as%202.png" alt="Difusión Plataformas 2">
+                <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+              </div>
+              <div class="media-caption">Difusión en Plataformas de Talento Salvadoreño #2.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8. CERTIFICADOS & CREDENCIALES ACADÉMICAS -->
+      <section id="sec-certificados" class="category-section" data-cat="certificados">
+        <div class="section-banner">
+          <div>
+            <h2>📜 Formación Académica, Diplomados & Certificaciones</h2>
+            <p>Respaldo académico universitario, especialización en 3D, UX Design, Google Analytics, Inbound Marketing (HubSpot), Platzi, Coursera y diplomas otorgados como ponente y tallerista.</p>
+          </div>
+        </div>
+
+        <div class="brand-block">
+          <div class="brand-header">
+            <span class="brand-tag">Documentos Oficiales en Formato Libro</span>
+            <h3>Título Universitario de Licenciada en Diseño Gráfico & Certificaciones PDF</h3>
+            <p>Navega por las páginas de mis títulos y certificados oficiales en formato PDF con vista en pantalla completa.</p>
+          </div>
+
+          <!-- Libro PDF Título Universitario -->
+          <div class="book-viewer-container" id="pdf-titulo">
+            <div class="book-toolbar">
+              <div class="book-title"><i class="fa-solid fa-graduation-cap" style="color:#e879f9;"></i> Título Universitario: Licenciada en Diseño Gráfico — Licda. Violeta Michelle Cortez Surio</div>
+              <div class="book-controls">
+                <button class="book-btn" onclick="changePdfPage('pdf-titulo', -1)"><i class="fa-solid fa-chevron-left"></i> Anterior</button>
+                <span class="page-indicator" id="pdf-titulo-info">Página 1 / --</span>
+                <button class="book-btn" onclick="changePdfPage('pdf-titulo', 1)">Siguiente <i class="fa-solid fa-chevron-right"></i></button>
+                <button class="book-btn fullscreen-btn" onclick="toggleBookFullscreen('pdf-titulo')"><i class="fa-solid fa-expand"></i> Pantalla Completa</button>
+              </div>
+            </div>
+            <div class="pdf-book-stage vertical-doc">
+              <button class="pdf-stage-arrow pdf-arrow-prev" onclick="changePdfPage('pdf-titulo', -1)" aria-label="Página anterior"><i class="fa-solid fa-chevron-left"></i></button>
+              <div class="pdf-canvas-wrapper" id="pdf-titulo-wrap">
+                <canvas id="pdf-titulo-canvas"></canvas>
+              </div>
+              <button class="pdf-stage-arrow pdf-arrow-next" onclick="changePdfPage('pdf-titulo', 1)" aria-label="Página siguiente"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+          </div>
+
+          <!-- Libro PDF Comercio Digital 52h -->
+          <div class="book-viewer-container" id="pdf-comercio">
+            <div class="book-toolbar">
+              <div class="book-title"><i class="fa-solid fa-book-open" style="color:#38bdf8;"></i> Certificado Comercio Digital (52 horas) — Capacítate para el Empleo</div>
+              <div class="book-controls">
+                <button class="book-btn" onclick="changePdfPage('pdf-comercio', -1)"><i class="fa-solid fa-chevron-left"></i> Anterior</button>
+                <span class="page-indicator" id="pdf-comercio-info">Página 1 / --</span>
+                <button class="book-btn" onclick="changePdfPage('pdf-comercio', 1)">Siguiente <i class="fa-solid fa-chevron-right"></i></button>
+                <button class="book-btn fullscreen-btn" onclick="toggleBookFullscreen('pdf-comercio')"><i class="fa-solid fa-expand"></i> Pantalla Completa</button>
+              </div>
+            </div>
+            <div class="pdf-book-stage">
+              <button class="pdf-stage-arrow pdf-arrow-prev" onclick="changePdfPage('pdf-comercio', -1)" aria-label="Página anterior"><i class="fa-solid fa-chevron-left"></i></button>
+              <div class="pdf-canvas-wrapper" id="pdf-comercio-wrap">
+                <canvas id="pdf-comercio-canvas"></canvas>
+              </div>
+              <button class="pdf-stage-arrow pdf-arrow-next" onclick="changePdfPage('pdf-comercio', 1)" aria-label="Página siguiente"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+          </div>
+
+          <!-- Libro PDF Ortografía y Redacción -->
+          <div class="book-viewer-container" id="pdf-ortografia">
+            <div class="book-toolbar">
+              <div class="book-title"><i class="fa-solid fa-book-open" style="color:#f472b6;"></i> Certificado Mejora tu Ortografía y Redacción — Fundación Carlos Slim</div>
+              <div class="book-controls">
+                <button class="book-btn" onclick="changePdfPage('pdf-ortografia', -1)"><i class="fa-solid fa-chevron-left"></i> Anterior</button>
+                <span class="page-indicator" id="pdf-ortografia-info">Página 1 / --</span>
+                <button class="book-btn" onclick="changePdfPage('pdf-ortografia', 1)">Siguiente <i class="fa-solid fa-chevron-right"></i></button>
+                <button class="book-btn fullscreen-btn" onclick="toggleBookFullscreen('pdf-ortografia')"><i class="fa-solid fa-expand"></i> Pantalla Completa</button>
+              </div>
+            </div>
+            <div class="pdf-book-stage">
+              <button class="pdf-stage-arrow pdf-arrow-prev" onclick="changePdfPage('pdf-ortografia', -1)" aria-label="Página anterior"><i class="fa-solid fa-chevron-left"></i></button>
+              <div class="pdf-canvas-wrapper" id="pdf-ortografia-wrap">
+                <canvas id="pdf-ortografia-canvas"></canvas>
+              </div>
+              <button class="pdf-stage-arrow pdf-arrow-next" onclick="changePdfPage('pdf-ortografia', 1)" aria-label="Página siguiente"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="brand-block">
+          <div class="brand-header">
+            <span class="brand-tag">Credenciales Verificadas • UX, Marketing, 3D & Docencia</span>
+            <h3>Galería de Diplomas y Certificados (Coursera, HubSpot, Platzi, Naska Digital & UTEC)</h3>
+            <p>Haz clic en cualquier certificado para inspeccionarlo en pantalla completa.</p>
+          </div>
+          <div class="uniform-grid" id="certificates-gallery"></div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Lightbox Modal para Imágenes -->
+  <div id="lightboxModal" class="lightbox-modal" onclick="closeLightbox(event)">
+    <button class="lightbox-close" onclick="closeLightbox(event)"><i class="fa-solid fa-xmark"></i></button>
+    <img id="lightboxImg" src="" alt="Vista Ampliada">
+    <div id="lightboxCaption" class="lightbox-caption"></div>
+  </div>
+
+  <footer>
+    <p>© 2026 Licda. Violeta Michelle Cortez Surio (Creative Art Violeta) • Todos los derechos reservados.</p>
+    <p style="margin-top:6px; font-size:0.78rem; color:#a855f7;">Diseño UI/UX & Arquitectura Web inspirada en Galería Nebulosa</p>
+  </footer>
+
+  <script>
+    // Configurar worker de PDF.js
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+    // ==================== 1. FONDO DE ESTRELLAS NEBULOSA ====================
+    const canvas = document.getElementById('stars-canvas');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      stars = Array.from({ length: 110 }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.6 + 0.3,
+        alpha: Math.random(),
+        speed: Math.random() * 0.015 + 0.004
+      }));
+    }
+
+    function animateStars() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      stars.forEach(s => {
+        s.alpha += s.speed;
+        if (s.alpha > 1 || s.alpha < 0.15) s.speed = -s.speed;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(233, 213, 255, ${s.alpha})`;
+        ctx.fill();
+      });
+      requestAnimationFrame(animateStars);
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    animateStars();
+
+    // ==================== 2. NAVEGACIÓN INTERACTIVA POR CATEGORÍAS ====================
+    const heroSection = document.getElementById('heroSection');
+    const stickyNav = document.getElementById('stickyNav');
+    const sections = document.querySelectorAll('.category-section');
+    const navButtons = document.querySelectorAll('.nav-pill-btn');
+
+    function goHome() {
+      heroSection.classList.remove('compact-mode');
+      stickyNav.classList.remove('active');
+      sections.forEach(sec => sec.classList.remove('active'));
+      navButtons.forEach(btn => btn.classList.remove('active'));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function selectCategory(cat) {
+      // Ocultar bio larga para ir directo al contenido con botones flotantes arriba
+      heroSection.classList.add('compact-mode');
+      stickyNav.classList.add('active');
+
+      navButtons.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.target === cat);
+      });
+
+      if (cat === 'hibrido') {
+        sections.forEach(sec => sec.classList.add('active'));
+      } else {
+        sections.forEach(sec => {
+          sec.classList.toggle('active', sec.dataset.cat === cat);
+        });
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      // Re-renderizar libros visibles por si cambiaron de display:none a block
+      setTimeout(() => {
+        Object.keys(pdfBooks).forEach(id => renderPdfPage(id));
+      }, 150);
+    }
+
+    // ==================== 3. GENERACIÓN DINÁMICA DE GALERÍAS REPETITIVAS ====================
+    // 18 diseños de Agencia Tridente
+    const tridenteContainer = document.getElementById('tridente-gallery');
+    for (let i = 1; i <= 18; i++) {
+      const url = `https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/231554976ec617b8e83847bb1def33cfc67614e3/Tridente%20${i}.png`;
+      tridenteContainer.innerHTML += `
+        <div class="media-card">
+          <div class="uniform-img-box square-box" onclick="openLightbox(this)">
+            <img src="${url}" alt="Diseño Agencia Tridente ${i}" loading="lazy">
+            <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+          </div>
+          <div class="media-caption">Pieza Publicitaria & Efeméride Multimarca #${i} — Agencia Tridente.</div>
+        </div>
+      `;
+    }
+
+    // 4 Premios Freelancer (8 imágenes)
+    const freelancerItems = [
+      { file: 'freelancer%201.png', title: '1.er Lugar Internacional: Diseño de Branding en Freelancer (2020) — Propuesta Ganadora #1' },
+      { file: 'freelancer%202.png', title: '1.er Lugar Internacional: Diseño de Branding en Freelancer (2020) — Certificado / Detalle #1' },
+      { file: 'freelancer%203.png', title: '1.er Lugar Internacional: Branding "Toys Parlour" en Freelancer (2020) — Identidad' },
+      { file: 'freelancer%204.png', title: '1.er Lugar Internacional: Branding "Toys Parlour" en Freelancer (2020) — Premiación' },
+      { file: 'freelancer%205.png', title: '1.er Lugar Internacional: Branding "Workin Momopedia LLC" (2020) — Logotipo' },
+      { file: 'freelancer%206.png', title: '1.er Lugar Internacional: Branding "Workin Momopedia LLC" (2020) — Adjudicación' },
+      { file: 'freelancer%207.png', title: '1.er Lugar Internacional: Branding "Cal Home Investors" (2020) — Identidad Visual' },
+      { file: 'freelancer%208.png', title: '1.er Lugar Internacional: Branding "Cal Home Investors" (2020) — Ganadora' }
+    ];
+
+    const freelancerContainer = document.getElementById('freelancer-gallery');
+    freelancerItems.forEach(item => {
+      const url = `https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/main/${item.file}`;
+      freelancerContainer.innerHTML += `
+        <div class="media-card">
+          <div class="uniform-img-box contain-mode" onclick="openLightbox(this)">
+            <img src="${url}" alt="${item.title}" loading="lazy">
+            <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+          </div>
+          <div class="media-caption">${item.title}</div>
+        </div>
+      `;
+    });
+
+    // Certificados en Imagen (Todos los enviados)
+    const certificatesList = [
+      { url: 'https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/dc009e77668009a424dee58722213b509a989662/Certificado%20de%20registro%20y%20documento%20autenticado%20de%20mi%20Licenciatura%20en%20Dise%C3%B1o%20Gr%C3%A1fico..png', title: 'Registro Oficial y Documento Autenticado — Licenciatura en Diseño Gráfico', isVertical: true },
+      { url: 'https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/32fa0a08a04947faaa8f1e7eaaa38767952150e5/Especialista%20en%20animaci%C3%B3n%203D%20para%20marketing%20y%20publicidad%20naska%20digital.png', title: 'Especialista en Animación 3D para Marketing y Publicidad — Naska Digital' },
+      { url: 'https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/75312127ed9ebaf354ac2e21eab0b2a6f01b513e/diploma-habilidades-empresariales.png', title: 'Diplomado en Habilidades Empresariales para Emprendedores — UTEC' },
+      { url: 'https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/75312127ed9ebaf354ac2e21eab0b2a6f01b513e/Portafolio%20de%20Especialista%20en%20Marketing%20Digital%20(2).png', title: 'Especialista en Marketing Digital — Graduación & Acreditación' },
+      { url: 'https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/d4d73913bc1d77d073b66c69a57f027b05ea6577/Direcci%C3%B3n%20de%20Arte%20y%20Artketing.jpg', title: 'Diploma Ponente: "Dirección de Arte y Artketing" — UTEC' },
+      { url: 'https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/af4bfed8699e56ee54d9a3e02f9a70102b578629/ACR%C3%8DLICO%20TALLER.jpg', title: 'Diploma Tallerista: "Inmersión Acrílica: Del Boceto a la Obra Maestra" — UTEC' },
+      { url: 'https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/af4bfed8699e56ee54d9a3e02f9a70102b578629/Talleres%20de%20dibujo%20natural%20y%20Dise%C3%B1o%20de%20productos%20sostenibles.png', title: 'Reconocimiento Tallerista: Dibujo Natural & Diseño Sostenible — C.E.C. Dra. María Julia Hernández' },
+      { url: 'https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/f433dd04154c28bbeb992499d514af2426ebaed2/certificado%20foundations%20of%20user%20experience%20ux%20design.pdf.png', title: 'Foundations of User Experience (UX) Design — Google / Coursera' },
+      { url: 'https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/f433dd04154c28bbeb992499d514af2426ebaed2/Measure%20and%20Optimize.png', title: 'Measure and Optimize Social Media Marketing Campaigns — Meta / Coursera' },
+      { url: 'https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/f433dd04154c28bbeb992499d514af2426ebaed2/fundamentals%20of%20social%20media.png', title: 'Fundamentals of Social Media Advertising — Meta / Coursera' },
+      { url: 'https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/f433dd04154c28bbeb992499d514af2426ebaed2/Introduction%20to%20social%20media.png', title: 'Introduction to Social Media Marketing — Meta / Coursera' },
+      { url: 'https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/f433dd04154c28bbeb992499d514af2426ebaed2/Social%20Media%20Management.png', title: 'Social Media Management — Meta / Coursera' },
+      { url: 'https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/f3c9b9b228061a2c6f0a870f82281559fb99e427/inbound%20marketing.png', title: 'Certificación Inbound Marketing — HubSpot Academy' },
+      { url: 'https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/7ec2d5218d026a47daef2400744241b996bcd4bd/Asistente%20web.png', title: 'Certificado Asistente Web — Capacítate para el Empleo' },
+      { url: 'https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/c7e198824a4d68da3afe43833db9a7bd6862e88e/certificado%20google%20analytics.jpg', title: 'Certificado Google Analytics — Platzi' },
+      { url: 'https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/c7e198824a4d68da3afe43833db9a7bd6862e88e/platzi%201.jpg', title: 'Certificación Profesional Platzi #1' },
+      { url: 'https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/c7e198824a4d68da3afe43833db9a7bd6862e88e/Platzi%202.jpg', title: 'Certificación Profesional Platzi #2' },
+      { url: 'https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/c7e198824a4d68da3afe43833db9a7bd6862e88e/Platzi%203.jpg', title: 'Certificación Profesional Platzi #3' },
+      { url: 'https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/c7e198824a4d68da3afe43833db9a7bd6862e88e/Platzi%204.jpg', title: 'Certificación Profesional Platzi #4' },
+      { url: 'https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/c7e198824a4d68da3afe43833db9a7bd6862e88e/Platzi%205.jpg', title: 'Certificación Profesional Platzi #5' },
+      { url: 'https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/c7e198824a4d68da3afe43833db9a7bd6862e88e/Platzi%206.jpg', title: 'Certificación Profesional Platzi #6' },
+      { url: 'https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/c7e198824a4d68da3afe43833db9a7bd6862e88e/Platzi%207.jpg', title: 'Certificación Profesional Platzi #7' },
+      { url: 'https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/c7e198824a4d68da3afe43833db9a7bd6862e88e/Platzi%208.jpg', title: 'Certificación Profesional Platzi #8' }
+    ];
+
+    const certContainer = document.getElementById('certificates-gallery');
+    certificatesList.forEach(cert => {
+      const boxClass = cert.isVertical ? 'uniform-img-box contain-mode vertical-box' : 'uniform-img-box contain-mode';
+      certContainer.innerHTML += `
+        <div class="media-card">
+          <div class="${boxClass}" onclick="openLightbox(this)">
+            <img src="${cert.url}" alt="${cert.title}" loading="lazy">
+            <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Ver</span>
+          </div>
+          <div class="media-caption">${cert.title}</div>
+        </div>
+      `;
+    });
+
+    // ==================== 4. MOTOR DE LIBROS INTERACTIVOS (PDF.JS) ====================
+    const pdfConfigs = {
+      'pdf-tss-exec': 'https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/da2d3765881ecd66ec469ff44dff3c758fff9c33/TSS_Resumen_Ejecutivo_Auditoria_Estrategica_Digital_Preliminary_August_2026%20(2).pdf',
+      'pdf-tss-copys': 'https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/c1fded191d26f52a4be44e8ca6e697d93479bc98/copys%20de%20TSS.pdf',
+      'pdf-chero-lives': 'https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/a849301e90534b0bf81881f95cceb2ff9bfcb076/Estrategia%20de%20contenido%20y%20lives.pdf',
+      'pdf-saytec-est': 'https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/3ea659a0c611ff73b298000dd06c81ae2bcd2676/Grupo%20saytec%20para%20estrategia.pdf',
+      'pdf-saytec-dis': 'https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/3ea659a0c611ff73b298000dd06c81ae2bcd2676/grupo%20saytec%20solo%20dise%C3%B1os.pdf',
+      'pdf-testing-sv': 'https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/aa75b08b98ddd947668793604cb5e6ec0ec17800/Marketing%20y%20dise%C3%B1o%20Testin%20sv.pdf',
+      'pdf-yt-ads': 'https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/ad65895550e1ea308f87f37b15ecf841eb2e00e8/Canal%20de%20youtube.pdf',
+      'pdf-etsy': 'https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/6850c8fcea1c3716ba42cdf325401d40be18347a/Tienda%20en%20Etsy.pdf',
+      'pdf-titulo': 'https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/1c341e0271a14e9b90e3fee79f4078800bf53026/T%C3%ADtulo_Universitario_Violeta_Michelle_Cortez_Surio.pdf',
+      'pdf-comercio': 'https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/793a632b538082612679bda8a9e1cdfa7cfaa7ce/9c07f004-3ea7-4da9-bfbd-d65e42f77974_certificado.pdf',
+      'pdf-ortografia': 'https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/e97b90f2fcea95e999395348274cacc5a8646a23/c4aa30e7-dcc2-47d6-85f9-19092c3f263d_certificado.pdf'
+    };
+
+    const pdfBooks = {};
+
+    async function initPdfBooks() {
+      for (const [id, url] of Object.entries(pdfConfigs)) {
+        try {
+          const doc = await pdfjsLib.getDocument(url).promise;
+          pdfBooks[id] = { doc, page: 1, total: doc.numPages };
+          renderPdfPage(id);
+        } catch (err) {
+          const info = document.getElementById(`${id}-info`);
+          if (info) info.textContent = 'Error al cargar PDF';
+        }
+      }
+    }
+
+    async function renderPdfPage(id) {
+      const book = pdfBooks[id];
+      if (!book) return;
+      const canvasEl = document.getElementById(`${id}-canvas`);
+      const infoEl = document.getElementById(`${id}-info`);
+      if (!canvasEl) return;
+
+      const page = await book.doc.getPage(book.page);
+      const isFullscreen = document.fullscreenElement && document.fullscreenElement.id === id;
+
+      const unscaledViewport = page.getViewport({ scale: 1 });
+      const isVertical = unscaledViewport.height > unscaledViewport.width;
+
+      let scale;
+      if (isFullscreen) {
+        // En pantalla completa, ajusta al alto total de la ventana disponible para no cortar nada
+        const availHeight = window.innerHeight - 100;
+        const availWidth = window.innerWidth - 80;
+        scale = Math.min(availHeight / unscaledViewport.height, availWidth / unscaledViewport.width, 2.0);
+      } else {
+        if (isVertical) {
+          // Documentos verticales (como el Título Universitario y Reporte Ejecutivo TSS 21.59 x 27.94 cm)
+          // Se ajustan para verse completos en altura con máxima nitidez y sin cortes arriba
+          scale = Math.min(680 / unscaledViewport.height, 1.35);
+        } else {
+          // Presentaciones horizontales
+          scale = 1.18;
+        }
+      }
+
+      const viewport = page.getViewport({ scale });
+      const context = canvasEl.getContext('2d');
+      canvasEl.height = viewport.height;
+      canvasEl.width = viewport.width;
+
+      await page.render({ canvasContext: context, viewport }).promise;
+      if (infoEl) infoEl.textContent = `Página ${book.page} / ${book.total}`;
+    }
+
+    function changePdfPage(id, delta) {
+      const book = pdfBooks[id];
+      if (!book) return;
+      const next = book.page + delta;
+      if (next < 1 || next > book.total) return;
+
+      const wrap = document.getElementById(`${id}-wrap`);
+      const animClass = delta > 0 ? 'flipping-next' : 'flipping-prev';
+      if (wrap) wrap.classList.add(animClass);
+
+      setTimeout(() => {
+        book.page = next;
+        renderPdfPage(id);
+        if (wrap) wrap.classList.remove(animClass);
+      }, 220);
+    }
+
+    // ==================== 5. MOTOR DE LIBROS EXCEL (.XLSX) ====================
+    const xlsxConfigs = {
+      'xlsx-tss': 'https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/772c7b0cc0eeff2b2ddbf3ea77f6ecdb99c79214/TSS_Research_%26_Audit_Master_Workbook_v1.1.xlsx',
+      'xlsx-chero': 'https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/f2562f2288380f63589337e74722b4a96bd41b63/Framework_Estandarizacion_Operativa_Chero_Films.xlsx',
+      'xlsx-mom': 'https://raw.githubusercontent.com/galeria-nebulosa/portafolio_violeta_surio/7f59602a9dcc8d2c9258a9b1111c438729075d8b/MOM_MADE_BAKERY_Marketing_Research_Audit_Master_Workbook_v1.0.xlsx'
+    };
+
+    async function initXlsxBooks() {
+      for (const [id, url] of Object.entries(xlsxConfigs)) {
+        try {
+          const res = await fetch(url);
+          const buffer = await res.arrayBuffer();
+          const workbook = XLSX.read(buffer, { type: 'array' });
+          const tabsBar = document.getElementById(`${id}-tabs`);
+          const stage = document.getElementById(`${id}-stage`);
+
+          tabsBar.innerHTML = '';
+          workbook.SheetNames.forEach((sheetName, idx) => {
+            const btn = document.createElement('button');
+            btn.className = 'xlsx-tab' + (idx === 0 ? ' active' : '');
+            btn.textContent = sheetName;
+            btn.onclick = () => {
+              tabsBar.querySelectorAll('.xlsx-tab').forEach(b => b.classList.remove('active'));
+              btn.classList.add('active');
+              stage.innerHTML = XLSX.utils.sheet_to_html(workbook.Sheets[sheetName]);
+            };
+            tabsBar.appendChild(btn);
+          });
+
+          if (workbook.SheetNames.length > 0) {
+            stage.innerHTML = XLSX.utils.sheet_to_html(workbook.Sheets[workbook.SheetNames[0]]);
+          }
+        } catch (e) {
+          const stage = document.getElementById(`${id}-stage`);
+          if (stage) stage.innerHTML = '<p style="color:#f472b6;">No se pudo previsualizar este libro Excel.</p>';
+        }
+      }
+    }
+
+    // Pantalla completa para libros PDF y Excel
+    function toggleBookFullscreen(containerId) {
+      const el = document.getElementById(containerId);
+      if (!document.fullscreenElement) {
+        el.requestFullscreen().then(() => {
+          if (pdfBooks[containerId]) renderPdfPage(containerId);
+        }).catch(() => {});
+      } else {
+        document.exitFullscreen().then(() => {
+          if (pdfBooks[containerId]) renderPdfPage(containerId);
+        });
+      }
+    }
+
+    document.addEventListener('fullscreenchange', () => {
+      Object.keys(pdfBooks).forEach(id => renderPdfPage(id));
+    });
+
+    // ==================== 6. LIGHTBOX PARA IMÁGENES ====================
+    function openLightbox(boxEl) {
+      const img = boxEl.querySelector('img');
+      const captionEl = boxEl.parentElement.querySelector('.media-caption');
+      document.getElementById('lightboxImg').src = img.src;
+      document.getElementById('lightboxCaption').textContent = captionEl ? captionEl.textContent : img.alt;
+      document.getElementById('lightboxModal').classList.add('open');
+    }
+
+    function closeLightbox(e) {
+      if (e.target.id === 'lightboxModal' || e.target.closest('.lightbox-close')) {
+        document.getElementById('lightboxModal').classList.remove('open');
+      }
+    }
+
+    // Inicializar libros al cargar
+    window.addEventListener('DOMContentLoaded', () => {
+      initPdfBooks();
+      initXlsxBooks();
+    });
+  </script>
+</body>
+</html>
